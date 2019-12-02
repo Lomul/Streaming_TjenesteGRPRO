@@ -1,12 +1,18 @@
 package Model;
 
-public class Watchable {
-    String name;
-    double rating;
+import java.util.List;
 
-    public Watchable(String name, double rating)
+public class Watchable {
+    String title;
+    double rating;
+    String year;
+    List<Watchable> genre;
+
+    public Watchable(String title, double rating, String year)
+                //laver vi en string af genre også ændre dem i konstruktor
+                //eller laver vi en liste af genre også smider det ind som parameter?
     {
-        this.name = name;
+        this.title = title;
         this.rating = rating;
     }
 }
