@@ -1,22 +1,25 @@
 package Model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class User {
     String name;
-    HashMap<Watchable, String> saved;
-    HashMap<Watchable, String> watched;
+    ArrayList<Watchable> saved;
+    ArrayList<Watchable> watched;
 
     public User (String name){
         this.name = name;
-        saved = new HashMap<>();
-        watched = new HashMap<>();
+        saved = new ArrayList<>();
+        watched = new ArrayList<>();
     }
     public void addSaved(Watchable watchable){
-        saved.put(watchable, "");
+        saved.add(watchable);
     }
     public void addWatched(Watchable watchable){
-        watched.put(watchable, "");
+        watched.add(watchable);
+    }
+    public void changeName(String name){
+        this.name = name;
     }
 
     //TODO: Add to ”Saved”
