@@ -1,5 +1,51 @@
 package Model;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javafx.scene.image.Image;
+
+public class SeriesCreator {
+
+    public static ArrayList<Series> createSeries() throws Exception {
+        Scanner input = new Scanner(new File("Serie.txt"));
+        input.useDelimiter(";|/n");
+        ArrayList<Series> series = new ArrayList<>();
+
+        while (input.hasNext()) {
+            String title = input.next();
+            if (title.contains("\r\n"))
+            {
+                title = title.replace("\r\n","");
+            }
+            String year = input.next();
+            String genre = input.next();
+            String rating = input.next();
+            String seasons = input.next();
+            String filePath = "SerieBilleder/" + title + ".jpg";
+
+            Image img = new Image(new FileInputStream(filePath));
+
+            Series seriesToAdd = new Series(title, year, rating, genre, seasons, img);
+            series.add(seriesToAdd);
+        }
+        input.close();
+        return series;
+        //Ved ikke om vi har brug for mere end det her?
+    }
+}
+
+
+
+/* Gammel kode >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+package Model;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
@@ -20,13 +66,6 @@ public class SeriesCreator {
             String genre = input.next();
             String rating = input.next();
             String seasons = input.next();
-
-            /*int id = input.nextInt();
-            String department = input.next();
-            String name = input.next();
-            double price = Double.valueOf(input.next().substring(1));
-            int stock = input.nextInt(); */
-
 
 
             Serie newSerie = new Serie(title, year, genre, rating, seasons);
@@ -73,3 +112,4 @@ public class SeriesCreator {
     }
 
 }
+*/
