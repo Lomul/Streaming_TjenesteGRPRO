@@ -5,7 +5,7 @@ public class Test {
     public static void main(String[] args) {
 
         try {
-            MovieCreator.createMovies();
+            SeriesCreator.createSeries();
         }catch(Exception e) {
             System.out.println(e.getMessage());
         }

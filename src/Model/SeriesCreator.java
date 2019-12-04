@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 public class SeriesCreator {
 
     public static ArrayList<Series> createSeries() throws Exception {
-        Scanner input = new Scanner(new File("Serie.txt"));
+        Scanner input = new Scanner(new File("Serier.txt"));
         input.useDelimiter(";|/n");
         ArrayList<Series> series = new ArrayList<>();
 
