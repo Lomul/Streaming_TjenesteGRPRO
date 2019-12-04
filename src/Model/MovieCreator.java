@@ -6,19 +6,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javafx.scene.image.Image;
 
 public class MovieCreator {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static ArrayList<Model.Movie> createMovies() throws Exception {
         Scanner input = new Scanner(new File("Film.txt"));
         input.useDelimiter(";|/n");
 //The Godfather; 1972; Crime, Drama; 9,2;
-        Movie[] movies = new Movie[0];
+        ArrayList<Model.Movie> movies = new ArrayList<>();
 
         while(input.hasNext()) {
-            Movie movieToAdd;
             String title = input.next();
             String year = input.next();
             String genre = input.next();
@@ -26,6 +26,8 @@ public class MovieCreator {
             String filePath = "FilmBilleder/" + title + ".jpg";
             Image img = new Image(new FileInputStream(filePath));
 
+            Model.Movie movieToAdd = new Model.Movie(title,year,rating,genre,img);
+            movies.add(movieToAdd);
 
             /*int id = input.nextInt();
             String department = input.next();
@@ -35,14 +37,16 @@ public class MovieCreator {
 
 
 
-            Movie newMovie = new Movie(title, year, genre, rating);
-            movies = addMovie(movies, newMovie);
+            //Movie newMovie = new Movie(title, year, genre, rating);
+            //movies = addMovie(movies, newMovie);
         }
 
-        for (Movie movie : movies) {
+        /*for (Movie movie : movies) {
             System.out.println(movie);
-        }
+        }*/
         input.close();
+        return movies;
+        //Ved ikke om vi har brug for mere end det her?
     }
 
     private static Movie[] addMovie(Movie[] movies, Movie movieToAdd) {
@@ -69,11 +73,11 @@ public class MovieCreator {
 
         }
 
-        @Override
+        /*@Override
         public String toString() {
             return String.format("Title: %s\r\nYear: %s\r\nGenre: %s\r\nRating: %s\r\n",
                     title, year, genre, rating);
-        }
+        }*/
     }
 
 }

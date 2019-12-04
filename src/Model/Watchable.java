@@ -9,15 +9,18 @@ public class Watchable {
     String title;
     String rating;
     String year;
-    List<String> genre;
+    String genre;
     Image img;
 
-    public Watchable(String title, String rating, String year, String imagePath) throws Exception
+    public Watchable(String title, String rating, String year, String genre, Image img) throws Exception
                 //laver vi en string af genre også ændre dem i konstruktor
                 //eller laver vi en liste af genre også smider det ind som parameter?
     {
         this.title = title;
         this.rating = rating;
+        this.year = year;
+        this.genre = genre;
+        this.img = img;
 
     }
 
