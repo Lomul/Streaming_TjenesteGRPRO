@@ -17,7 +17,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Streaming Heaven");
         button = new Button();
-        button.setText("Magnus er dejlig");
+        button.setText("click");
 
         button.setOnAction(this);
 

@@ -7,19 +7,22 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ImageExample extends Application {
     @Override
     public void start(Stage stage) throws FileNotFoundException {
         //Creating an image
-        Image image = new Image(new FileInputStream("C:\\Users\\elmel\\IdeaProjects\\Streaming_TjenesteGRPRO\\test.png"));
+        Image image = new Image(new FileInputStream("test.png"));
+        //Image image1 = new Image(new FileInputStream("C:\\Users\\madsc\\Documents\\GitHub\\Streaming_TjenesteGRPRO\\test.png"));
 
         //Setting the image view
         ImageView imageView = new ImageView(image);
+        //ImageView imageView1 = new ImageView(image1);
 
         //Creating a Group object
-        Group root = new Group(imageView);
+        VBox root = new VBox(imageView);
 
         //Creating a scene object
         Scene scene = new Scene(root, 600, 500);
