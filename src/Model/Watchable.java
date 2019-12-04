@@ -3,13 +3,14 @@ package Model;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import javafx.scene.image.Image;
 
 public class Watchable {
     String title;
     double rating;
     String year;
     List<String> genre;
-    BufferedImage img;
+    Image img;
 
     public Watchable(String title, double rating, String year, String imagePath) throws Exception
                 //laver vi en string af genre også ændre dem i konstruktor
@@ -17,10 +18,10 @@ public class Watchable {
     {
         this.title = title;
         this.rating = rating;
-        img = ImageIO.read(getClass().getResource("C:\\Users\\elmel\\IdeaProjects\\Streaming_TjenesteGRPRO\\test.png"));
+
     }
 
-    public BufferedImage getImg() {
+    /*public BufferedImage getImg() {
         return img;
-    }
+    }*/
 }

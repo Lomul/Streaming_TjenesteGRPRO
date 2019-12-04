@@ -1,10 +1,13 @@
 package Model;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Scanner;
+import javafx.scene.image.Image;
 
 public class MovieCreator {
 
@@ -15,10 +18,14 @@ public class MovieCreator {
         Movie[] movies = new Movie[0];
 
         while(input.hasNext()) {
+            Movie movieToAdd;
             String title = input.next();
             String year = input.next();
             String genre = input.next();
             String rating = input.next();
+            String filePath = "FilmBilleder/" + title + ".jpg";
+            Image img = new Image(new FileInputStream(filePath));
+
 
             /*int id = input.nextInt();
             String department = input.next();
