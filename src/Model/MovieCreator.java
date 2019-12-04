@@ -12,11 +12,11 @@ import javafx.scene.image.Image;
 
 public class MovieCreator {
 
-    public static ArrayList<Model.Movie> createMovies() throws Exception {
+    public static ArrayList<Movie> createMovies() throws Exception {
         Scanner input = new Scanner(new File("Film.txt"));
         input.useDelimiter(";|/n");
 //The Godfather; 1972; Crime, Drama; 9,2;
-        ArrayList<Model.Movie> movies = new ArrayList<>();
+        ArrayList<Movie> movies = new ArrayList<>();
 
         while(input.hasNext()) {
             String title = input.next();
@@ -26,7 +26,7 @@ public class MovieCreator {
             String filePath = "FilmBilleder/" + title + ".jpg";
             Image img = new Image(new FileInputStream(filePath));
 
-            Model.Movie movieToAdd = new Model.Movie(title,year,rating,genre,img);
+            Movie movieToAdd = new Movie(title,year,rating,genre,img);
             movies.add(movieToAdd);
 
             /*int id = input.nextInt();
@@ -49,7 +49,7 @@ public class MovieCreator {
         //Ved ikke om vi har brug for mere end det her?
     }
 
-    private static Movie[] addMovie(Movie[] movies, Movie movieToAdd) {
+    /*private static Movie[] addMovie(Movie[] movies, Movie movieToAdd) {
         Movie[] newMovies = new Movie[movies.length + 1];
         System.arraycopy(movies, 0, newMovies, 0, movies.length);
         newMovies[newMovies.length - 1] = movieToAdd;
@@ -73,11 +73,9 @@ public class MovieCreator {
 
         }
 
-        /*@Override
+        @Override
         public String toString() {
             return String.format("Title: %s\r\nYear: %s\r\nGenre: %s\r\nRating: %s\r\n",
                     title, year, genre, rating);
         }*/
     }
-
-}
