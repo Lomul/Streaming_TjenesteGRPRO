@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Watchable {
     String title;
-    double rating;
+    String rating;
     String year;
     List<String> genre;
     BufferedImage img;
 
-    public Watchable(String title, double rating, String year, String imagePath) throws Exception
+    public Watchable(String title, String rating, String year, String imagePath) throws Exception
                 //laver vi en string af genre også ændre dem i konstruktor
                 //eller laver vi en liste af genre også smider det ind som parameter?
     {

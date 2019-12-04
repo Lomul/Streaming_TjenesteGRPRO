@@ -1,11 +1,9 @@
 package Model;
 
 public class Movie extends Watchable{
-    protected String length;
 
-    public Movie (String length, String title, double rating, String year) throws Exception {
+    public Movie (String title, String year, String genre, String rating) throws Exception {
         super(title,rating, year, "");
-        this.length = length;
     }
-
+//TODO genre bliver ikke brugt her men den skal vel stadig defineres
 }
