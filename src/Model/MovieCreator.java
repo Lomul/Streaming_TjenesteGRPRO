@@ -19,6 +19,10 @@ public class MovieCreator {
 
         while (input.hasNext()) {
             String title = input.next();
+            if (title.contains("\r\n"))
+            {
+                title = title.replace("\r\n","");
+            }
             String year = input.next();
             String genre = input.next();
             String rating = input.next();

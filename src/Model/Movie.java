@@ -8,10 +8,10 @@ public class Movie extends Watchable{
         super(title,rating,year,genre,img);
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return String.format("Title: %s\r\nYear: %s\r\nGenre: %s\r\nRating: %s\r\n",
                 title, year, genre, rating);
-    }
+    }*/
 //TODO genre bliver ikke brugt her men den skal vel stadig defineres
 }
