@@ -38,22 +38,24 @@ public class SeriesCreator {
         //Ved ikke om vi har brug for mere end det her?
     }
 
-    private static ArrayList<Season> seasonCreator(String s) {
+    private static ArrayList<Season> seasonCreator(String s)
+    {
         ArrayList<Season> result = new ArrayList<>();
         String regex = "(?<season>\\d\\d|\\d)-(?<episodes>\\d\\d|\\d)"; //Regular expression to capture the number of the season and the amount of episodes in that season
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(s);
-
-        while (m.find()) {
+        while (m.find())
+        {
             int seasonNumber = Integer.parseInt(m.group("season")); // We convert the string given by the regular expression into an integer.
             int episodes = Integer.parseInt(m.group("episodes"));
             Season seasonToAdd = new Season(seasonNumber);
             for (int i = 0; i < episodes; i++)
             {
-                seasonToAdd.addEpisode(new Episode(i+1)); //We fill up the Episodes ArrayList of the current Season.
+                seasonToAdd.addEpisode(new Episode(i+1)); //We fill up the Episodes ArrayList of the Season.
             }
             result.add(seasonToAdd);
         }
         return result;
     }
 }
+
