@@ -11,4 +11,9 @@ public class Season {
         this.seasonNumber = seasonNumber;
         episodes = new ArrayList<>();
     }
+
+    public void addEpisode(Episode episode)
+    {
+        episodes.add(episode);
+    }
 }
