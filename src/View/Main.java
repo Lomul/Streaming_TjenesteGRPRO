@@ -13,9 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -33,10 +35,10 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             stage.setTitle("Pos");
 
             // create a label
-            Label label = new Label("this is Pos example");
+           // Label label = new Label("this is Pos example");
 
             // create a Tile pane
-            TilePane tile_pane = new TilePane(label);
+            TilePane tile_pane = new TilePane();
 
             ScrollPane scrollPane = new ScrollPane(tile_pane);
             scrollPane.setFitToHeight(true);
@@ -48,7 +50,10 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             // create and add buttons to tilepane
             for (Movie m : movies) {
                 Label label1 = new Label (m.getTitle());
+                label1.setFont(Font.font("Times New Roman",18));
+                label1.setWrapText(true);
                 ImageView iv = new ImageView(m.getImg());
+                iv.setOnMouseClicked(e -> System.out.println(m.getTitle()));
                 VBox vBox = new VBox();
                 vBox.getChildren().addAll(iv,label1);
                 tile_pane.getChildren().add(vBox);
