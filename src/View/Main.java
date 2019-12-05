@@ -14,13 +14,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 
@@ -40,11 +37,14 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             // create a Tile pane
             TilePane tile_pane = new TilePane();
 
+            tile_pane.setVgap(10);
+            tile_pane.setHgap(50);
+
             ScrollPane scrollPane = new ScrollPane(tile_pane);
             scrollPane.setFitToHeight(true);
 
             BorderPane root = new BorderPane(scrollPane);
-            root.setPadding(new Insets(15));
+            //root.setPadding(new Insets(15));
 
 
             // create and add buttons to tilepane
@@ -52,11 +52,29 @@ public class Main extends Application implements EventHandler<ActionEvent>{
                 Label label1 = new Label (m.getTitle());
                 label1.setFont(Font.font("Times New Roman",18));
                 label1.setWrapText(true);
+                label1.setMaxWidth(m.getImg().getWidth());
                 ImageView iv = new ImageView(m.getImg());
                 iv.setOnMouseClicked(e -> System.out.println(m.getTitle()));
                 VBox vBox = new VBox();
                 vBox.getChildren().addAll(iv,label1);
                 tile_pane.getChildren().add(vBox);
+
+                iv.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        vBox.setScaleX(1.2);
+                        vBox.setScaleY(1.2);
+                    }
+                });
+
+                iv.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        vBox.setScaleX(1);
+                        vBox.setScaleY(1);
+                    }
+                });
+
             }
 
             // set Alignment of pane
