@@ -24,6 +24,13 @@ public class Watchable {
 
     }
 
+    public Image getImg() {
+        return img;
+    }
+
+    public String getTitle(){
+        return title;
+    }
     /*public BufferedImage getImg() {
         return img;
     }*/
