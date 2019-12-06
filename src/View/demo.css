@@ -1,0 +1,62 @@
+.root {
+    -fx-font-size: 14px;
+    -fx-font-family: sans-serif;
+    -fx-background-color: #ffffff;
+}
+
+.header-section {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-background-color: #ACD0E1;
+    -fx-padding: 15px;
+}
+
+#account, #movies, #series, #home {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-padding: 15px, 0px, 15px, 0px;
+    -fx-border: none;
+}
+
+.content-section {
+    -fx-padding: 10 10 10 10;
+    -fx-wrap-text: true;
+
+}
+
+#content-header {
+    -fx-font-size: 18px;
+    -fx-padding: 0 0 10 0;
+    -fx-font-weight: 700;
+}
+
+#content {
+    -fx-wrap-text: true;
+    -fx-font-size: 16px;
+}
+
+#footer-section {
+    -fx-alignment: center;
+    -fx-padding: 10 10 10 10;
+    -fx-border-width: 1;
+    -fx-border-color: #E8E8E8 transparent transparent transparent;
+}
+
+
+#header {
+    -fx-border: none;
+    -fx-background-color: transparent;
+    -fx-text-fill: #205E7C;
+    -fx-effect: innershadow(three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-font-size: 22px;
+    -fx-cursor: hand;
+    /*-fx-padding: 0px, 0px, 0px, 0px;*/
+}
+
+.HBox {
+    -fx-spacing: 20;
+    -fx-alignment: center-left;
+}
+
