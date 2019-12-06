@@ -83,14 +83,14 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
             // set Alignment of pane
             tile_pane.setAlignment(Pos.TOP_CENTER);
-            //contentpics.getChildren().add(tile_pane);
+
             // create a scene
             Scene scene = new Scene(root1, 400, 300); //tile_pane i stedet for root for at fixe det med at den kun bruger halvdelen af skærmen til billeder
             scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
             // set the scene
             stage.setScene(scene);
 
-
+            contentpics.getChildren().add(root);
 
             stage.show();
         } catch (Exception e) {
