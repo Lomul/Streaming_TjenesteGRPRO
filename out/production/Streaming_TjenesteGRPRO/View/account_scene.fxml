@@ -1,0 +1,59 @@
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+
+
+<BorderPane fx:controller="View.Controller" xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <BorderPane styleClass="header-section">
+            <left>
+                <HBox styleClass="HBox">
+                    <ImageView styleClass="logo"
+                               pickOnBounds="true" preserveRatio="true" fitWidth="100">
+                        <image >
+                            <Image url="@logo2.png" />
+                        </image>
+                    </ImageView>
+                    <Label id="header" text="Streaming Heaven"></Label>
+                </HBox>
+            </left>
+            <right>
+                <HBox>
+                    <Button id="home" text="Home" fx:id="homescene" onAction="#changeSceneToHome"></Button>
+                    <Button id="movies" text="Movies" fx:id="moviesscene" onAction="#changeSceneToMovies"></Button>
+                    <Button id="series" text="Series" fx:id="seriesscene" onAction="#changeSceneToSeries"></Button>
+                    <Button id="account" text="Account" style="-fx-text-fill: black"></Button>
+                </HBox>
+            </right>
+
+            <stylesheets>
+                <URL value="@demo.css" />
+            </stylesheets>
+        </BorderPane>
+    </top>
+
+    <center>
+        <VBox styleClass="content-section">
+            <children>
+                <Label id="content-header" text="Account"></Label>
+                <Label id="content">
+                    <text>
+                        Du er sej
+                    </text>
+                </Label>
+            </children>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox id="footer-section">
+            <children>
+                <Label text="Streaming Heaven 2019"></Label>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

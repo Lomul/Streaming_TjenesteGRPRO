@@ -1,0 +1,80 @@
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+
+<BorderPane fx:controller="View.Controller" xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <BorderPane styleClass="header-section">
+            <left>
+                <HBox styleClass="HBox">
+                    <ImageView styleClass="logo"
+                               pickOnBounds="true" preserveRatio="true" fitWidth="100">
+                        <image >
+                            <Image url="@logo2.png" />
+                        </image>
+                    </ImageView>
+                    <Label id="header" text="Streaming Heaven"></Label>
+                </HBox>
+            </left>
+            <right>
+                <HBox>
+                    <Button id="home" text="Home" fx:id="homescene" onAction="#changeSceneToHome"></Button>
+                    <Button id="movies" text="Movies" style="-fx-text-fill: black"></Button>
+                    <Button id="series" text="Series" fx:id="seriesscene" onAction="#changeSceneToSeries"></Button>
+                    <Button id="account" text="Account" fx:id="accountscene" onAction="#changeSceneToAccount"></Button>
+                </HBox>
+            </right>
+
+            <stylesheets>
+                <URL value="@demo.css" />
+            </stylesheets>
+        </BorderPane>
+    </top>
+
+    <center>
+        <VBox styleClass="content-section">
+            <children>
+                <HBox style="-fx-alignment: center; -fx-spacing: 5px">
+                    <ImageView styleClass="searchimg"
+                               pickOnBounds="true" preserveRatio="true" fitWidth="22">
+                        <image>
+                            <Image url="@searchicon.png" />
+                        </image>
+                    </ImageView>
+                    <TextField fx:id="textField"></TextField>
+                    <ComboBox value="Title" fx:id ="comboBox">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Title"/>
+                                <String fx:value="Genre"/>
+                                <String fx:value="Year"/>
+                                <String fx:value="Rating"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                    <Button id="search" text="Search" onAction="#searchComboBoxMovies"></Button>
+                </HBox>
+                <Label id="content-header" text="Movies"></Label>
+                <Label id="content">
+                    <VBox fx:id="contentpics">
+
+                    </VBox>
+                </Label>
+            </children>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox id="footer-section">
+            <children>
+                <Label text="Streaming Heaven 2019"></Label>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>
