@@ -5,6 +5,7 @@ import Model.MovieCreator;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 public class Main extends Application implements EventHandler<ActionEvent>{
 
+    @FXML VBox contentpics;
     public void start(Stage stage) {
         try {
             Parent root1 = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
@@ -46,7 +48,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             scrollPane.setFitToHeight(true);
 
             BorderPane root = new BorderPane(scrollPane);
-            //root.setPadding(new Insets(15));
+            //root.setPadding(new Insets(15)); grimme padding/box rundt om ting
 
 
             // create and add buttons to tilepane
@@ -87,6 +89,8 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
             // set the scene
             stage.setScene(scene);
+
+            contentpics.getChildren().add(root);
 
             stage.show();
         } catch (Exception e) {

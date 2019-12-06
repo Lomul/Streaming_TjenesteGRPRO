@@ -9,7 +9,7 @@
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 
-<BorderPane fx:controller="Controller" xmlns:fx="http://javafx.com/fxml">
+<BorderPane fx:controller="View.Controller" xmlns:fx="http://javafx.com/fxml">
     <top>
         <BorderPane styleClass="header-section">
             <left>
@@ -63,9 +63,9 @@
                 </HBox>
                 <Label id="content-header" text="Movies"></Label>
                 <Label id="content">
-                    <text>
-                        Magnus er en kæmpe taber :)
-                    </text>
+                    <VBox fx:id="contentpics">
+
+                    </VBox>
                 </Label>
             </children>
         </VBox>
