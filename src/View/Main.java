@@ -25,6 +25,8 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
     public void start(Stage stage) {
         try {
+            Parent root1 = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
+
 
             ArrayList<Movie> movies = MovieCreator.createMovies();
 
@@ -81,8 +83,8 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             tile_pane.setAlignment(Pos.TOP_CENTER);
 
             // create a scene
-            Scene scene = new Scene(root, 400, 300); //tile_pane i stedet for root for at fixe det med at den kun bruger halvdelen af skærmen til billeder
-
+            Scene scene = new Scene(root1, 400, 300); //tile_pane i stedet for root for at fixe det med at den kun bruger halvdelen af skærmen til billeder
+            scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
             // set the scene
             stage.setScene(scene);
 
