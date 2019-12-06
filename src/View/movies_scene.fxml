@@ -39,7 +39,7 @@
     </top>
 
     <center>
-        <VBox styleClass="content-section">
+        <VBox styleClass="content-section" fx:id ="movieBox">
             <children>
                 <HBox style="-fx-alignment: center; -fx-spacing: 5px">
                     <ImageView styleClass="searchimg"
@@ -63,9 +63,6 @@
                 </HBox>
                 <Label id="content-header" text="Movies"></Label>
                 <Label id="content">
-                    <text>
-                        Magnus er en kæmpe taber :)
-                    </text>
                 </Label>
             </children>
         </VBox>
