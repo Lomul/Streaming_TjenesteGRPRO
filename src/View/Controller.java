@@ -63,10 +63,10 @@ public class Controller {
     @FXML
     private void setScene(ActionEvent event, Parent root){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 800, 500);
         scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
-        stage.setMaximized(true);
         stage.setScene(scene);
+        stage.setMaximized(true);
     }
 
     @FXML
@@ -105,6 +105,8 @@ public class Controller {
         /*System.out.println(searchLabel.getText());*/
         searchLabel.setText(newtext);
         /*System.out.println(searchLabel.getText());*/
+
+
 
     }
 
