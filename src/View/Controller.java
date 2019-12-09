@@ -1,8 +1,6 @@
 package View;
 
-import Model.Movie;
-import Model.MovieCreator;
-import Model.Watchable;
+import Model.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,12 +22,13 @@ import javafx.fxml.*;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller {
     @FXML private ComboBox<String> comboBox;
     @FXML private TextField textField;
-    @FXML public VBox movieBox;
+    @FXML public VBox watchBox;
 
     @FXML
     private void changeSceneToMovies(ActionEvent event) throws Exception {
@@ -38,8 +37,8 @@ public class Controller {
         Scene scene = new Scene(root, 800, 500);
         scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
         stage.setScene(scene);
-        VBox mB = (VBox) root.lookup("#movieBox");
-        TilePane p = makeTilePane();
+        VBox mB = (VBox) root.lookup("#watchBox");
+        BorderPane p = makeBorderPane(MovieCreator.createMovies());
         mB.getChildren().add(p);
     }
     @FXML
@@ -65,6 +64,9 @@ public class Controller {
         Scene scene = new Scene(root, 800, 500);
         scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
         stage.setScene(scene);
+        VBox mB = (VBox) root.lookup("#watchBox");
+        BorderPane p = makeBorderPane(SeriesCreator.createSeries());
+        mB.getChildren().add(p);
     }
     @FXML
     private void searchComboBoxMovies(ActionEvent event) throws Exception {
@@ -111,28 +113,26 @@ public class Controller {
 
     }
 
-    private TilePane makeTilePane()
+    private BorderPane makeBorderPane(ArrayList arrayList)
     {
         TilePane tile_pane = new TilePane();
+        ScrollPane scrollPane = new ScrollPane(tile_pane);
+        scrollPane.setFitToHeight(true);
+        BorderPane root = new BorderPane(scrollPane);
+
         try {
-            ArrayList<Movie> movies = MovieCreator.createMovies();
+
             tile_pane.setVgap(10);
             tile_pane.setHgap(50);
 
-            ScrollPane scrollPane = new ScrollPane(tile_pane);
-            scrollPane.setFitToHeight(true);
-
-            BorderPane root = new BorderPane(scrollPane);
-
-
-            // create and add buttons to tilepane
-            for (Movie m : movies) {
-                Label label1 = new Label (m.getTitle());
+            for (Object o : arrayList) {
+                Watchable w = (Watchable) o;
+                Label label1 = new Label (w.getTitle());
                 label1.setFont(Font.font("Times New Roman",18));
                 label1.setWrapText(true);
-                label1.setMaxWidth(m.getImg().getWidth());
-                ImageView iv = new ImageView(m.getImg());
-                iv.setOnMouseClicked(e -> System.out.println(m.getTitle()));
+                label1.setMaxWidth(w.getImg().getWidth());
+                ImageView iv = new ImageView(w.getImg());
+                iv.setOnMouseClicked(e -> System.out.println(w.getTitle()));
                 VBox vBox = new VBox();
                 vBox.getChildren().addAll(iv,label1);
                 tile_pane.getChildren().add(vBox);
@@ -163,7 +163,7 @@ public class Controller {
         {
             System.out.println(e.getMessage());
         }
-        return tile_pane;
+        return root;
     }
 }
 

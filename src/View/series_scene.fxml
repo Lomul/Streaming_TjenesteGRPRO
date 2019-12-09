@@ -63,10 +63,9 @@
                 </HBox>
                 <Label id="content-header" text="Series"></Label>
                 <Label id="content">
-                    <text>
-                        Alle er tabere :)
-                    </text>
                 </Label>
+                <VBox fx:id="watchBox">
+                </VBox>
             </children>
         </VBox>
     </center>

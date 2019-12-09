@@ -64,7 +64,7 @@
                 <Label id="content-header" text="Movies"></Label>
                 <Label id="content">
                 </Label>
-                <VBox fx:id="movieBox">
+                <VBox fx:id="watchBox">
                 </VBox>
             </children>
         </VBox>
