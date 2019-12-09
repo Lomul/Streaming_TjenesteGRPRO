@@ -99,16 +99,14 @@ public class Controller {
 
         Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        setScene(event, root);
+
+        String newtext = "Searched for: \n" + value +  ": " + text + ", in all";
         System.out.println("All: " + text +  " " + value);
-
-        Scene scene = new Scene(root, 800, 500);
-        scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
-        stage.setScene(scene);
-
         //Change search result display:
         Label searchLabel = (Label) root.lookup("#searchLabel");
         /*System.out.println(searchLabel.getText());*/
-        searchLabel.setText("newtext");
+        searchLabel.setText(newtext);
         /*System.out.println(searchLabel.getText());*/
 
     }

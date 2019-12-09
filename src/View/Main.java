@@ -26,6 +26,7 @@ public class Main extends Application {
 
     public void start(Stage stage) {
         try {
+            stage.setTitle("Streaming Heaven");
             Parent root1 = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
 
             // create a scene
