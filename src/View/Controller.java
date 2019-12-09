@@ -33,10 +33,8 @@ public class Controller {
     @FXML
     private void changeSceneToMovies(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("movies_scene.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
-        scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
-        stage.setScene(scene);
+        setScene(event, root);
+
         VBox mB = (VBox) root.lookup("#watchBox");
         BorderPane p = makeBorderPane(MovieCreator.createMovies());
         mB.getChildren().add(p);
@@ -44,30 +42,32 @@ public class Controller {
     @FXML
     private void changeSceneToHome(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
-        scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
-        stage.setScene(scene);
+        setScene(event, root);
     }
     @FXML
     private void changeSceneToAccount(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("account_scene.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
-        scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
-        stage.setScene(scene);
+        setScene(event, root);
+
     }
     @FXML
     private void changeSceneToSeries(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("series_scene.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
-        scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
-        stage.setScene(scene);
+        setScene(event, root);
+
         VBox mB = (VBox) root.lookup("#watchBox");
         BorderPane p = makeBorderPane(SeriesCreator.createSeries());
         mB.getChildren().add(p);
     }
+
+    @FXML
+    private void setScene(ActionEvent event, Parent root){
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 800, 500);
+        scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
+        stage.setScene(scene);
+    }
+
     @FXML
     private void searchComboBoxMovies(ActionEvent event) throws Exception {
         String text = textField.getText();
