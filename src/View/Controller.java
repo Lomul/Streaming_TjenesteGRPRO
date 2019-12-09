@@ -28,12 +28,12 @@ import java.util.ResourceBundle;
 public class Controller {
     @FXML private ComboBox<String> comboBox;
     @FXML private TextField textField;
+    @FXML private VBox contentPics;
     @FXML private VBox movieBox;
 
     @FXML
     private void changeSceneToMovies(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("movies_scene.fxml"));
-        VBox movieBox = (VBox) root.lookup("#movieBox");
         TilePane p = makeTilePane();
         movieBox.getChildren().add(p);
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

@@ -24,27 +24,25 @@ import java.util.ArrayList;
 
 public class Main extends Application implements EventHandler<ActionEvent>{
 
-    @FXML VBox contentpics;
     public void start(Stage stage) {
         try {
             Parent root1 = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
 
-
-            ArrayList<Movie> movies = MovieCreator.createMovies();
+            //ArrayList<Movie> movies = MovieCreator.createMovies();
 
             // set title for the stage
-            stage.setTitle("Pos");
+            //stage.setTitle("Pos");
 
             // create a label
            // Label label = new Label("this is Pos example");
 
             // create a Tile pane
-            TilePane tile_pane = new TilePane();
+            //TilePane tile_pane = new TilePane();
 
-            tile_pane.setVgap(10);
-            tile_pane.setHgap(50);
+            //tile_pane.setVgap(10);
+            //tile_pane.setHgap(50);
 
-            ScrollPane scrollPane = new ScrollPane(tile_pane);
+            /*ScrollPane scrollPane = new ScrollPane(tile_pane);
             scrollPane.setFitToHeight(true);
 
             BorderPane root = new BorderPane(scrollPane);
@@ -82,15 +80,17 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             }
 
             // set Alignment of pane
-            tile_pane.setAlignment(Pos.TOP_CENTER);
+            tile_pane.setAlignment(Pos.TOP_CENTER);*/
 
             // create a scene
+            //contentPics.getChildren().add(p);
+            //contentPics = (VBox) root1.lookup("contentPics");
             Scene scene = new Scene(root1, 400, 300); //tile_pane i stedet for root for at fixe det med at den kun bruger halvdelen af skærmen til billeder
             scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
             // set the scene
             stage.setScene(scene);
 
-            contentpics.getChildren().add(root);
+            //contentpics.getChildren().add(root);
 
             stage.show();
         } catch (Exception e) {
@@ -105,6 +105,62 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
         public static void main(String[] args) {
         launch(args);
+    }
+
+    private TilePane makeTilePane()
+    {
+        TilePane tile_pane = new TilePane();
+        try {
+            ArrayList<Movie> movies = MovieCreator.createMovies();
+            tile_pane.setVgap(10);
+            tile_pane.setHgap(50);
+
+            ScrollPane scrollPane = new ScrollPane(tile_pane);
+            scrollPane.setFitToHeight(true);
+
+            BorderPane root = new BorderPane(scrollPane);
+            //root.setPadding(new Insets(15));
+
+
+            // create and add buttons to tilepane
+            for (Movie m : movies) {
+                Label label1 = new Label (m.getTitle());
+                label1.setFont(Font.font("Times New Roman",18));
+                label1.setWrapText(true);
+                label1.setMaxWidth(m.getImg().getWidth());
+                ImageView iv = new ImageView(m.getImg());
+                iv.setOnMouseClicked(e -> System.out.println(m.getTitle()));
+                VBox vBox = new VBox();
+                vBox.getChildren().addAll(iv,label1);
+                tile_pane.getChildren().add(vBox);
+
+                iv.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        vBox.setScaleX(1.2);
+                        vBox.setScaleY(1.2);
+                    }
+                });
+
+                iv.setOnMouseExited(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        vBox.setScaleX(1);
+                        vBox.setScaleY(1);
+                    }
+                });
+
+            }
+
+            // set Alignment of pane
+            tile_pane.setAlignment(Pos.TOP_CENTER);
+
+
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return tile_pane;
     }
 
     @Override

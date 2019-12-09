@@ -39,15 +39,15 @@
     </top>
 
     <center>
-        <VBox styleClass="content-section">
+        <VBox styleClass="content-section" fx:id="movieBox">
             <children>
                 <HBox style="-fx-alignment: center; -fx-spacing: 5px">
                     <ImageView styleClass="searchimg"
-                                           pickOnBounds="true" preserveRatio="true" fitWidth="22">
-                    <image>
-                        <Image url="@searchicon.png" />
-                    </image>
-                </ImageView>
+                               pickOnBounds="true" preserveRatio="true" fitWidth="22">
+                        <image>
+                            <Image url="@searchicon.png" />
+                        </image>
+                    </ImageView>
                     <TextField fx:id="textField"></TextField>
                     <ComboBox value="Title" fx:id ="comboBox">
                         <items>
@@ -63,12 +63,10 @@
                 </HBox>
                 <Label id="content-header" text="Movies"></Label>
                 <Label id="content">
-
+                    <VBox fx:id="contentPics">
+                    </VBox>
                 </Label>
             </children>
-        </VBox>
-        <VBox fx:id="contentpics">
-
         </VBox>
     </center>
     <bottom>
