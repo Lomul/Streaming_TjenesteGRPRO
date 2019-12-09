@@ -33,6 +33,7 @@ public class Main extends Application {
             Scene scene = new Scene(root1, 800, 500); //tile_pane i stedet for root for at fixe det med at den kun bruger halvdelen af skærmen til billeder
             scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
             // set the scene
+            stage.setMaximized(true);
             stage.setScene(scene);
 
             stage.show();

@@ -63,8 +63,9 @@ public class Controller {
     @FXML
     private void setScene(ActionEvent event, Parent root){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
+        stage.setMaximized(true);
         stage.setScene(scene);
     }
 
@@ -75,10 +76,8 @@ public class Controller {
         System.out.println("Movies: " + text + " " + value);
 
         Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
-        scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
-        stage.setScene(scene);
+
+        setScene(event, root);
     }
     @FXML
     private void searchComboBoxSeries(ActionEvent event) throws Exception {
@@ -87,10 +86,8 @@ public class Controller {
         System.out.println("Series: " + text + " " + value);
 
         Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
-        scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
-        stage.setScene(scene);
+
+        setScene(event, root);
     }
     @FXML
     private void searchComboBox(ActionEvent event) throws Exception {
@@ -98,7 +95,7 @@ public class Controller {
         String value = (String) comboBox.getValue();
 
         Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
         setScene(event, root);
 
         String newtext = "Searched for: \n" + value +  ": " + text + ", in all";
