@@ -9,9 +9,9 @@ public class Series extends  Watchable{
     List<Season> seasons;
 
 
-    public Series(String title, String year, String genre, String rating, ArrayList<Season> seasons, Image img) throws Exception {
+    public Series(String title, double rating, String year, String genre, ArrayList<Season> seasons, Image img) throws Exception {
 
-        super(title, year,genre,rating,img);
+        super(title, rating, genre, year, img);
         this.seasons = seasons;
     }
 

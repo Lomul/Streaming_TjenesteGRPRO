@@ -26,11 +26,16 @@ public class MovieCreator {
             String year = input.next();
             String genre = input.next();
             String rating = input.next();
+            if (rating.contains(","))
+            {
+                rating = rating.replace(",",".");
+            }
+            double ratingDouble = Double.parseDouble(rating);
             String filePath = "FilmBilleder/" + title + ".jpg";
 
             Image img = new Image(new FileInputStream(filePath));
 
-            Movie movieToAdd = new Movie(title, year, rating, genre, img);
+            Movie movieToAdd = new Movie(title, ratingDouble,year,genre,img);
             movies.add(movieToAdd);
         }
         input.close();

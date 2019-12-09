@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 public class Movie extends Watchable{
     public boolean watched = false;
 
-    public Movie (String title, String year, String genre, String rating, Image img) throws Exception {
+    public Movie (String title, double rating, String year, String genre, Image img) throws Exception {
         super(title,rating,year,genre,img);
     }
 

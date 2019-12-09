@@ -24,13 +24,18 @@ public class SeriesCreator {
             String year = input.next();
             String genre = input.next();
             String rating = input.next();
+            if (rating.contains(","))
+            {
+                rating = rating.replace(",",".");
+            }
+            double ratingDouble = Double.parseDouble(rating);
             String seasons = input.next();
             ArrayList<Season> seasonArray = seasonCreator(seasons);
             String filePath = "SerieBilleder/" + title + ".jpg";
 
             Image img = new Image(new FileInputStream(filePath));
 
-            Series seriesToAdd = new Series(title, year, rating, genre, seasonArray, img);
+            Series seriesToAdd = new Series(title,ratingDouble,year,genre,seasonArray,img);
             series.add(seriesToAdd);
         }
         input.close();
@@ -56,6 +61,7 @@ public class SeriesCreator {
             result.add(seasonToAdd);
         }
         return result;
+
     }
 }
 

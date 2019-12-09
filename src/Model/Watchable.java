@@ -7,12 +7,12 @@ import javafx.scene.image.Image;
 
 public class Watchable {
     String title;
-    String rating;
+    double rating;
     String year;
     String genre;
     Image img;
 
-    public Watchable(String title, String rating, String year, String genre, Image img) throws Exception
+    public Watchable(String title, double rating, String year, String genre, Image img) throws Exception
                 //laver vi en string af genre også ændre dem i konstruktor
                 //eller laver vi en liste af genre også smider det ind som parameter?
     {
