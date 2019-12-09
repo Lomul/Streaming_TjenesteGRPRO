@@ -25,10 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class Controller {
+public class Controller implements Initializable{
+    private ArrayList<Movie> allMovies;
+    private ArrayList<Series> allSeries;
     @FXML private ComboBox<String> comboBox;
     @FXML private TextField textField;
     @FXML public VBox watchBox;
+    @FXML public VBox searchedBox;
 
     @FXML
     private void changeSceneToMovies(ActionEvent event) throws Exception {
@@ -36,7 +39,7 @@ public class Controller {
         setScene(event, root);
 
         VBox mB = (VBox) root.lookup("#watchBox");
-        BorderPane p = makeBorderPane(MovieCreator.createMovies());
+        BorderPane p = makeBorderPane(allMovies);
         mB.getChildren().add(p);
     }
     @FXML
@@ -56,7 +59,7 @@ public class Controller {
         setScene(event, root);
 
         VBox mB = (VBox) root.lookup("#watchBox");
-        BorderPane p = makeBorderPane(SeriesCreator.createSeries());
+        BorderPane p = makeBorderPane(allSeries);
         mB.getChildren().add(p);
     }
 
@@ -76,7 +79,6 @@ public class Controller {
         System.out.println("Movies: " + text + " " + value);
 
         Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
-
         setScene(event, root);
     }
     @FXML
@@ -86,7 +88,6 @@ public class Controller {
         System.out.println("Series: " + text + " " + value);
 
         Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
-
         setScene(event, root);
     }
     @FXML
@@ -98,6 +99,9 @@ public class Controller {
 
         setScene(event, root);
 
+        BorderPane searched = makeBorderPane(getSearched(text));
+        VBox sB = (VBox) root.lookup("#searchedBox");
+        sB.getChildren().add(searched);
         String newtext = "Searched for: \n" + value +  ": " + text + ", in all";
         System.out.println("All: " + text +  " " + value);
         //Change search result display:
@@ -105,8 +109,6 @@ public class Controller {
         /*System.out.println(searchLabel.getText());*/
         searchLabel.setText(newtext);
         /*System.out.println(searchLabel.getText());*/
-
-
 
     }
 
@@ -161,6 +163,48 @@ public class Controller {
             System.out.println(e.getMessage());
         }
         return root;
+    }
+
+    private ArrayList getSearched(String s)
+    {
+        ArrayList<Watchable> searchedWatchables = new ArrayList<>();
+        String searchTerm = s.toLowerCase();
+        switch (comboBox.getValue())
+        {
+            case "Title":
+
+                for (Movie movie : allMovies)
+                {
+                    String title = movie.getTitle().toLowerCase();
+                    if (title.contains(searchTerm))
+                    {
+                        searchedWatchables.add(movie);
+                    }
+                }
+                for (Series serie : allSeries)
+                {
+                    String title = serie.getTitle().toLowerCase();
+                    if (title.contains(searchTerm))
+                    {
+                        searchedWatchables.add(serie);
+                    }
+                }
+                return searchedWatchables;
+
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            allMovies = MovieCreator.createMovies();
+            allSeries = SeriesCreator.createSeries();
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
 

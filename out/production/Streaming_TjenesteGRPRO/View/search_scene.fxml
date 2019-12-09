@@ -64,8 +64,9 @@
                 <Label id="content-header" text="Search"></Label>
                 <Label fx:id="searchLabel" text="searcholdtext"></Label>
                 <Label id="content">
-                    
                 </Label>
+                <VBox fx:id="searchedBox">
+                </VBox>
             </children>
         </VBox>
     </center>
