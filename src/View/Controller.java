@@ -2,6 +2,7 @@ package View;
 
 import Model.Movie;
 import Model.MovieCreator;
+import Model.Watchable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,18 +29,18 @@ import java.util.ResourceBundle;
 public class Controller {
     @FXML private ComboBox<String> comboBox;
     @FXML private TextField textField;
-    @FXML private VBox contentPics;
-    @FXML private VBox movieBox;
+    @FXML public VBox movieBox;
 
     @FXML
     private void changeSceneToMovies(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("movies_scene.fxml"));
-        TilePane p = makeTilePane();
-        movieBox.getChildren().add(p);
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 800, 500);
         scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
         stage.setScene(scene);
+        VBox mB = (VBox) root.lookup("#movieBox");
+        TilePane p = makeTilePane();
+        mB.getChildren().add(p);
     }
     @FXML
     private void changeSceneToHome(ActionEvent event) throws Exception {
@@ -122,7 +123,6 @@ public class Controller {
             scrollPane.setFitToHeight(true);
 
             BorderPane root = new BorderPane(scrollPane);
-            //root.setPadding(new Insets(15));
 
 
             // create and add buttons to tilepane
