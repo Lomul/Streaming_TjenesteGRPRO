@@ -66,10 +66,10 @@ public class Controller implements Initializable{
     @FXML
     private void setScene(ActionEvent event, Parent root){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
         scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
         stage.setScene(scene);
-        stage.setMaximized(true);
+        //stage.setMaximized(true);
     }
 
     @FXML
