@@ -222,10 +222,13 @@ public class Controller implements Initializable{
                 }
                 for (Series serie : allSeries)
                 {
-                    String year = serie.getYear().toLowerCase();
-                    if (year.contains(searchTerm))
+                    int[] year = serie.getYearArray();
+                    int searchTermInt = Integer.parseInt(searchTerm);
+                    for(int i = 0; i < serie.getYearArray().length; i++)
                     {
-                        searchedWatchables.add(serie);
+                        if(year[i] == searchTermInt) {
+                            searchedWatchables.add(serie);
+                        }
                     }
                 }
                 return searchedWatchables;
@@ -285,7 +288,17 @@ public class Controller implements Initializable{
         wTitle.setFont(Font.font("Tahoma",30));
 
         Label wGenre = new Label(w.getGenre() + " \u25CF ");
-        Label wYear = new Label(w.getYear()  + " \u25CF ");
+
+        Label wYear = new Label("Fail displaying year");
+
+        if(w instanceof Movie) {
+            Movie m = (Movie) w;
+            wYear.setText(m.getYear()+ " \u25CF ");
+        }else if(w instanceof Series){
+            Series s = (Series) w;
+            wYear.setText(s.getDisplayYear()+ " \u25CF ");
+        }
+
         Label wRating = new Label(String.valueOf(w.getRating()));
 
         ImageView iv = new ImageView(w.getImg());

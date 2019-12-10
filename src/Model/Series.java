@@ -7,15 +7,25 @@ import java.util.List;
 
 public class Series extends  Watchable{
     List<Season> seasons;
+    int[] yearArray;
 
 
-    public Series(String title, double rating, String year, String genre, ArrayList<Season> seasons, Image img) throws Exception {
+    public Series(String title, double rating, int[] yearArray, String genre, ArrayList<Season> seasons, Image img) throws Exception {
 
-        super(title, rating, year, genre, img);
+        super(title, rating, genre, img);
         this.seasons = seasons;
+        this.yearArray = yearArray;
     }
     public List<Season> getSeasons(){
         return seasons;
+    }
+
+    public int[] getYearArray(){
+        return yearArray;
+    }
+
+    public String getDisplayYear(){
+        return yearArray[0] + "-" + yearArray[yearArray.length-1];
     }
 
     public void addSeason(Season season)

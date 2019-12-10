@@ -34,12 +34,11 @@ public class SeriesCreator {
 
             Image img = new Image(new FileInputStream(filePath));
 
-            Series seriesToAdd = new Series(title,ratingDouble,year,genre,seasonArray,img); //Udskift year med year array???
+            Series seriesToAdd = new Series(title,ratingDouble,yearArray,genre,seasonArray,img);
             series.add(seriesToAdd);
         }
         input.close();
         return series;
-        //Ved ikke om vi har brug for mere end det her?
     }
 
     private static ArrayList<Season> seasonCreator(String s)
@@ -72,7 +71,7 @@ public class SeriesCreator {
 
             int endYear = 2020;
 
-            if(!m.group("yearEnd").isEmpty()){ //Mads help, ved ikke om det er 0 eller null eller whatever help
+            if(!m.group("yearEnd").isEmpty()){
                 endYear = Integer.parseInt(m.group("yearEnd"));
             }
 
