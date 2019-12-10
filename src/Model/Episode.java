@@ -13,5 +13,10 @@ public class Episode {
         this.watched = watched;
     }
 
+    public String toString()
+    {
+        return "Episode " + episodeNumber;
+    }
+
 
 }

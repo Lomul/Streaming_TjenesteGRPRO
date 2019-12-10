@@ -60,7 +60,6 @@ public class SeriesCreator {
             result.add(seasonToAdd);
         }
         return result;
-
     }
 
     private static int[] yearArrayMaker(String s){
@@ -71,13 +70,13 @@ public class SeriesCreator {
         while (m.find()){
             int startYear = Integer.parseInt(m.group("yearStart"));
 
-            int endYear = Integer.parseInt(m.group("yearEnd"));
+            int endYear = 2020;
 
-            if(endYear == 0){ //Mads help, ved ikke om det er 0 eller null eller whatever help
-                endYear = 2020;
+            if(!m.group("yearEnd").isEmpty()){ //Mads help, ved ikke om det er 0 eller null eller whatever help
+                endYear = Integer.parseInt(m.group("yearEnd"));
             }
 
-            int totalSeasons = endYear - startYear;
+            int totalSeasons = (endYear - startYear)+1;
             year = new int[totalSeasons];
 
             for(int i = 0; i < totalSeasons; i++){

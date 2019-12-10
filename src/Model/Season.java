@@ -20,4 +20,9 @@ public class Season {
     public List<Episode> getEpisodes() {
         return episodes;
     }
+
+    public String toString()
+    {
+        return "Season " + seasonNumber;
+    }
 }
