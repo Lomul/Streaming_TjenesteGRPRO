@@ -24,6 +24,7 @@ public class SeriesCreator {
                 title = title.replace("\r\n","");
             }
             String year = input.next();
+            int[] yearArray = yearArrayMaker(year);
             String genre = input.next();
             String rating = input.next();
             double ratingDouble = convertStringToDouble(rating);
@@ -33,7 +34,7 @@ public class SeriesCreator {
 
             Image img = new Image(new FileInputStream(filePath));
 
-            Series seriesToAdd = new Series(title,ratingDouble,year,genre,seasonArray,img);
+            Series seriesToAdd = new Series(title,ratingDouble,year,genre,seasonArray,img); //Udskift year med year array???
             series.add(seriesToAdd);
         }
         input.close();
@@ -61,5 +62,32 @@ public class SeriesCreator {
         return result;
 
     }
+
+    private static int[] yearArrayMaker(String s){
+        int[] year = new int[0];
+        String regex = "(?<yearStart>\\d\\d\\d\\d)-(?<yearEnd>\\d\\d\\d\\d)";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(s);
+        while (m.find()){
+            int startYear = Integer.parseInt(m.group("yearStart"));
+
+            int endYear = Integer.parseInt(m.group("yearEnd"));
+
+            if(endYear == 0){ //Mads help, ved ikke om det er 0 eller null eller whatever help
+                endYear = 2020;
+            }
+
+            int totalSeasons = endYear - startYear;
+            year = new int[totalSeasons];
+
+            for(int i = 0; i < totalSeasons; i++){
+                year[i] = startYear + i;
+            }
+
+        }
+
+        return year;
+    }
+
 }
 
