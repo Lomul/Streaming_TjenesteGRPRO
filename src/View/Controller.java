@@ -191,6 +191,44 @@ public class Controller implements Initializable{
                 }
                 return searchedWatchables;
 
+            case "Year":
+                for (Movie movie : allMovies)
+                {
+                    String year = movie.getYear().toLowerCase();
+                    if (year.contains(searchTerm))
+                    {
+                        searchedWatchables.add(movie);
+                    }
+                }
+                for (Series serie : allSeries)
+                {
+                    String year = serie.getYear().toLowerCase();
+                    if (year.contains(searchTerm))
+                    {
+                        searchedWatchables.add(serie);
+                    }
+                }
+                return searchedWatchables;
+
+            case "Genre":
+                for (Movie movie : allMovies)
+                {
+                    String genre = movie.getGenre().toLowerCase();
+                    if (genre.contains(searchTerm))
+                    {
+                        searchedWatchables.add(movie);
+                    }
+                }
+                for (Series serie : allSeries)
+                {
+                    String genre = serie.getGenre().toLowerCase();
+                    if (genre.contains(searchTerm))
+                    {
+                        searchedWatchables.add(serie);
+                    }
+                }
+                return searchedWatchables;
+
             default:
                 return null;
         }

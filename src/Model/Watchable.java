@@ -31,6 +31,15 @@ public class Watchable {
     public String getTitle(){
         return title;
     }
+
+    public String getYear() {
+        return year;
+    }
+
+    public String getGenre(){
+        return genre;
+    }
+
     /*public BufferedImage getImg() {
         return img;
     }*/
