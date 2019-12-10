@@ -16,4 +16,8 @@ public class Season {
     {
         episodes.add(episode);
     }
+
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
 }

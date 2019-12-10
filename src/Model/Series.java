@@ -14,6 +14,9 @@ public class Series extends  Watchable{
         super(title, rating, genre, year, img);
         this.seasons = seasons;
     }
+    public List<Season> getSeasons(){
+        return seasons;
+    }
 
     public void addSeason(Season season)
     {

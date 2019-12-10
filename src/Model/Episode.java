@@ -12,4 +12,6 @@ public class Episode {
     public void setWatched(boolean watched) {
         this.watched = watched;
     }
+
+
 }

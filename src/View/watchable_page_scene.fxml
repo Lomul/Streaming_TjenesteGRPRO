@@ -39,7 +39,9 @@
     </top>
 
     <center>
-        <VBox id="watchableInfo" fx:id="watchableInfo">
+        <VBox styleClass="info-section">
+            <VBox id="watchableInfo" fx:id="watchableInfo">
+            </VBox>
         </VBox>
     </center>
 

@@ -25,6 +25,12 @@
     -fx-wrap-text: true;
 
 }
+.info-section {
+    -fx-padding: 20;
+    -fx-wrap-text: true;
+
+}
+
 
 #content-header {
     -fx-font-size: 18px;

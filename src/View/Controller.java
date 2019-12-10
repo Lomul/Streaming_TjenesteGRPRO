@@ -2,6 +2,7 @@ package View;
 
 import Exceptions.NoSearchMatched;
 import Model.*;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -283,28 +284,54 @@ public class Controller implements Initializable{
         Label wTitle = new Label(w.getTitle());
         wTitle.setFont(Font.font("Tahoma",30));
 
-        Label wGenre = new Label(w.getGenre());
-        Label wYear = new Label(w.getYear());
+        Label wGenre = new Label(w.getGenre() + " \u25CF ");
+        Label wYear = new Label(w.getYear()  + " \u25CF ");
         Label wRating = new Label(String.valueOf(w.getRating()));
 
         ImageView iv = new ImageView(w.getImg());
         iv.setId("infoIMG");
-        Button play = new Button("Play");
+        iv.setPreserveRatio(true);
+        iv.setFitHeight(300.0);
+        Button play = new Button("Play \u25B6");
         Button save = new Button("Save");
 
         VBox vBox = (VBox) root.lookup("#watchableInfo");
-
-        HBox hBox = new HBox();
-        VBox vBoxDetail = new VBox();
+        vBox.setSpacing(20);
+        HBox hBox = new HBox(20);
+        VBox vBoxDetail = new VBox(20);
         HBox hBoxDetail = new HBox();
-        HBox hBoxPS = new HBox();
+        HBox hBoxPS = new HBox(20);
 
         hBox.getChildren().addAll(iv, vBoxDetail);
         hBoxDetail.getChildren().addAll(wGenre, wYear, wRating);
         hBoxPS.getChildren().addAll(play, save);
-        vBoxDetail.getChildren().addAll(wTitle, hBoxDetail, hBoxPS);
+        vBoxDetail.getChildren().addAll(wTitle, hBoxDetail);
 
+        if(w instanceof Series) {
+            Series s = (Series) w;
+            ComboBox<Season> seasonList
+                    = new ComboBox<Season>(FXCollections.observableList(s.getSeasons()));
+            seasonList.setValue(s.getSeasons().get(0));
+
+            ArrayList e = new ArrayList(s.getSeasons().get(0).getEpisodes());
+
+            ComboBox<Episode> episodeList
+                    = new ComboBox<Episode>(FXCollections.observableList(e));
+            episodeList.setValue(s.getSeasons().get(0).getEpisodes().get(0));
+
+            seasonList.setId("seasonList");
+            seasonList.setOnAction(e2 -> {
+                episodeList.setItems(FXCollections.observableList(seasonList.getValue().getEpisodes()));
+                episodeList.setValue(seasonList.getValue().getEpisodes().get(0));
+            });
+
+            vBoxDetail.getChildren().addAll(seasonList);
+            vBoxDetail.getChildren().addAll(episodeList);
+        }
+
+        vBoxDetail.getChildren().addAll(hBoxPS);
         vBox.getChildren().add(hBox);
+
     }
 
     public static double convertStringToDouble(String s)
