@@ -13,8 +13,6 @@ public class Watchable {
     Image img;
 
     public Watchable(String title, double rating, String year, String genre, Image img) throws Exception
-                //laver vi en string af genre også ændre dem i konstruktor
-                //eller laver vi en liste af genre også smider det ind som parameter?
     {
         this.title = title;
         this.rating = rating;
@@ -40,7 +38,8 @@ public class Watchable {
         return genre;
     }
 
-    /*public BufferedImage getImg() {
-        return img;
-    }*/
+    public double getRating() {
+        return rating;
+    }
+
 }

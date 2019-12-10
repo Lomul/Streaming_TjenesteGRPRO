@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static View.Controller.convertStringToDouble;
+
 public class SeriesCreator {
 
     public static ArrayList<Series> createSeries() throws Exception {
@@ -24,11 +26,7 @@ public class SeriesCreator {
             String year = input.next();
             String genre = input.next();
             String rating = input.next();
-            if (rating.contains(","))
-            {
-                rating = rating.replace(",",".");
-            }
-            double ratingDouble = Double.parseDouble(rating);
+            double ratingDouble = convertStringToDouble(rating);
             String seasons = input.next();
             ArrayList<Season> seasonArray = seasonCreator(seasons);
             String filePath = "SerieBilleder/" + title + ".jpg";

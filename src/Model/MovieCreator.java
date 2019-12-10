@@ -9,6 +9,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javafx.scene.image.Image;
+import static View.Controller.convertStringToDouble;
 
 public class MovieCreator {
 
@@ -26,11 +27,7 @@ public class MovieCreator {
             String year = input.next();
             String genre = input.next();
             String rating = input.next();
-            if (rating.contains(","))
-            {
-                rating = rating.replace(",",".");
-            }
-            double ratingDouble = Double.parseDouble(rating);
+            double ratingDouble = convertStringToDouble(rating);
             String filePath = "FilmBilleder/" + title + ".jpg";
 
             Image img = new Image(new FileInputStream(filePath));

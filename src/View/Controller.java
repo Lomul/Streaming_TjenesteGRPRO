@@ -228,10 +228,37 @@ public class Controller implements Initializable{
                     }
                 }
                 return searchedWatchables;
+            case "Rating":
+                double rating = convertStringToDouble(searchTerm);
+                for (Movie movie : allMovies)
+                {
+                    if (movie.getRating() >= rating)
+                    {
+                        searchedWatchables.add(movie);
+                    }
+                }
+                for (Series serie : allSeries)
+                {
+                    if (serie.getRating() >= rating)
+                    {
+                        searchedWatchables.add(serie);
+                    }
+                }
+                return searchedWatchables;
 
             default:
                 return null;
         }
+    }
+
+    public static double convertStringToDouble(String s)
+    {
+        if (s.contains(","))
+        {
+            s = s.replace(",",".");
+        }
+        return Double.parseDouble(s);
+
     }
 
     @Override
