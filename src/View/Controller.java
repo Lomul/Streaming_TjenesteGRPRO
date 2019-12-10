@@ -1,5 +1,6 @@
 package View;
 
+import Exceptions.NoSearchMatched;
 import Model.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,10 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.fxml.*;
@@ -98,6 +96,10 @@ public class Controller implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
 
         setScene(event, root);
+
+        if(getSearched(text).size() <= 0) {
+            throw new NoSearchMatched(text);
+        }
 
         BorderPane searched = makeBorderPane(getSearched(text));
 
