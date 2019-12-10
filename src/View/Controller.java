@@ -100,6 +100,10 @@ public class Controller implements Initializable{
         setScene(event, root);
 
         BorderPane searched = makeBorderPane(getSearched(text));
+
+        ComboBox<String> comboBoxValue = (ComboBox<String>) root.lookup("#comboBox");
+        comboBoxValue.setValue(value);
+
         VBox sB = (VBox) root.lookup("#searchedBox");
         sB.getChildren().add(searched);
         String newtext = "Searched for: \n" + value +  ": " + text + ", in all";
