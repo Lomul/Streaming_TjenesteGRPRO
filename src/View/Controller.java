@@ -17,7 +17,9 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.fxml.*;
+import javafx.scene.control.Button;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,6 +140,17 @@ public class Controller implements Initializable{
                 label1.setMaxWidth(w.getImg().getWidth());
                 ImageView iv = new ImageView(w.getImg());
                 iv.setOnMouseClicked(e -> System.out.println(w.getTitle()));
+
+                //idk jeg prøver, ok?
+                iv.setOnMouseClicked(e -> {
+                    try {
+                        changeSceneToWatchablePage(e, w);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+                // ------
+
                 VBox vBox = new VBox();
                 vBox.getChildren().addAll(iv,label1);
                 tile_pane.getChildren().add(vBox);
@@ -257,6 +270,43 @@ public class Controller implements Initializable{
         }
     }
 
+    @FXML
+    private void changeSceneToWatchablePage(MouseEvent event, Watchable w) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("watchable_page_scene.fxml"));
+
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+        scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
+        stage.setScene(scene);
+
+        //Watchable page info
+        Label wTitle = new Label(w.getTitle());
+        wTitle.setFont(Font.font("Tahoma",30));
+
+        Label wGenre = new Label(w.getGenre());
+        Label wYear = new Label(w.getYear());
+        Label wRating = new Label(String.valueOf(w.getRating()));
+
+        ImageView iv = new ImageView(w.getImg());
+        iv.setId("infoIMG");
+        Button play = new Button("Play");
+        Button save = new Button("Save");
+
+        VBox vBox = (VBox) root.lookup("#watchableInfo");
+
+        HBox hBox = new HBox();
+        VBox vBoxDetail = new VBox();
+        HBox hBoxDetail = new HBox();
+        HBox hBoxPS = new HBox();
+
+        hBox.getChildren().addAll(iv, vBoxDetail);
+        hBoxDetail.getChildren().addAll(wGenre, wYear, wRating);
+        hBoxPS.getChildren().addAll(play, save);
+        vBoxDetail.getChildren().addAll(wTitle, hBoxDetail, hBoxPS);
+
+        vBox.getChildren().add(hBox);
+    }
+
     public static double convertStringToDouble(String s)
     {
         if (s.contains(","))
@@ -266,6 +316,7 @@ public class Controller implements Initializable{
         return Double.parseDouble(s);
 
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
