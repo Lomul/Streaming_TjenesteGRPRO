@@ -54,7 +54,7 @@ public class Main extends Application {
     }
 
         public static void main(String[] args) {
-        launch(args);
+        launch(args); //Den her er kun så jeg kan pushe
     }
 
 }
