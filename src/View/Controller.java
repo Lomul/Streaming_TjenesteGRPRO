@@ -96,28 +96,29 @@ public class Controller implements Initializable{
         String text = textField.getText();
         String value = (String) comboBox.getValue();
 
-        Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
-
-        setScene(event, root);
 
         if(getSearched(text).size() <= 0) {
             throw new NoSearchMatched(text);
         }
 
-        BorderPane searched = makeBorderPane(getSearched(text));
+            Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
 
-        ComboBox<String> comboBoxValue = (ComboBox<String>) root.lookup("#comboBox");
-        comboBoxValue.setValue(value);
+            setScene(event, root);
 
-        VBox sB = (VBox) root.lookup("#searchedBox");
-        sB.getChildren().add(searched);
-        String newtext = "Searched for: \n" + value +  ": " + text + ", in all";
-        System.out.println("All: " + text +  " " + value);
-        //Change search result display:
-        Label searchLabel = (Label) root.lookup("#searchLabel");
-        /*System.out.println(searchLabel.getText());*/
-        searchLabel.setText(newtext);
-        /*System.out.println(searchLabel.getText());*/
+            BorderPane searched = makeBorderPane(getSearched(text));
+
+            ComboBox<String> comboBoxValue = (ComboBox<String>) root.lookup("#comboBox");
+            comboBoxValue.setValue(value);
+
+            VBox sB = (VBox) root.lookup("#searchedBox");
+            sB.getChildren().add(searched);
+            String newtext = "Searched for: \n" + value + ": " + text + ", in all";
+            System.out.println("All: " + text + " " + value);
+            //Change search result display:
+            Label searchLabel = (Label) root.lookup("#searchLabel");
+            /*System.out.println(searchLabel.getText());*/
+            searchLabel.setText(newtext);
+            /*System.out.println(searchLabel.getText());*/
 
     }
 

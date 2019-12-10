@@ -38,6 +38,7 @@
     <center>
         <VBox styleClass="content-section">
             <children>
+                <Label id="content-header" text="Home"></Label>
                 <HBox style="-fx-alignment: center; -fx-spacing: 5px">
                     <ImageView styleClass="searchimg"
                                pickOnBounds="true" preserveRatio="true" fitWidth="22">
@@ -58,8 +59,6 @@
                     </ComboBox>
                     <Button id="search" text="Search" onAction="#searchComboBox"></Button>
                 </HBox>
-                <Label id="content-header" text="Home"></Label>
-                <Label id="content-header" fx:id="searchLabel" text="Homeoldtext" ></Label>
                 <Label id="content">
                     <text>
                         Mads er en kæmpe taber :)
