@@ -95,6 +95,12 @@ public class Controller implements Initializable{
     }
 
     @FXML
+    private void logIn(){}
+
+    @FXML
+    private void logInAdmin(){}
+
+    @FXML
     private void searchComboBoxMovies(ActionEvent event) throws Exception {
         String text = textField.getText();
         String value = (String) comboBox.getValue();
@@ -112,6 +118,7 @@ public class Controller implements Initializable{
         Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
         setScene(event, root);
     }
+
     @FXML
     private void searchComboBox(ActionEvent event) throws Exception {
         String text = textField.getText();

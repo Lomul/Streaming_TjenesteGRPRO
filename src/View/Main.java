@@ -3,6 +3,7 @@ package View;
 import Exceptions.NoSearchMatched;
 import Model.Movie;
 import Model.MovieCreator;
+import Model.User;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,16 +21,20 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main extends Application {
 
     public static boolean loggedIn;
+    public static String loggedInAs;
 
     public void start(Stage stage) throws IOException {
         loggedIn = false;
+        loggedInAs = "";
+
+        User ADMIN = new User("ADMIN");
+
         Parent root1 = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
 
         try {

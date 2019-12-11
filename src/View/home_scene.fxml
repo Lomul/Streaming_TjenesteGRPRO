@@ -64,6 +64,9 @@
                         Mads er en kæmpe taber :)
                     </text>
                 </Label>
+                <TextField fx:id="user" promptText="username"></TextField>
+                <Button fx:id="loginButton" alignment="CENTER" text="Login" onAction="#logIn"></Button>
+                <Button fx:id="adminButton" alignment="CENTER" text="Admin" onAction="#logInAdmin"></Button>
             </children>
         </VBox>
     </center>
