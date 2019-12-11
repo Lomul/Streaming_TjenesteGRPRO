@@ -23,7 +23,7 @@ public class SeriesCreator {
             {
                 title = title.replace("\r\n","");
             }
-            String year = input.next();
+            String year = input.next().replaceAll("\\s","");
             int[] yearArray = yearArrayMaker(year);
             String genre = input.next();
             String rating = input.next();
@@ -41,48 +41,58 @@ public class SeriesCreator {
         return series;
     }
 
-    private static ArrayList<Season> seasonCreator(String s)
-    {
+    private static ArrayList<Season> seasonCreator(String s) {
         ArrayList<Season> result = new ArrayList<>();
         String regex = "(?<season>\\d\\d|\\d)-(?<episodes>\\d\\d|\\d)"; //Regular expression to capture the number of the season and the amount of episodes in that season
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(s);
-        while (m.find())
-        {
+        while (m.find()) {
             int seasonNumber = Integer.parseInt(m.group("season")); // We convert the string given by the regular expression into an integer.
             int episodes = Integer.parseInt(m.group("episodes"));
             Season seasonToAdd = new Season(seasonNumber);
-            for (int i = 0; i < episodes; i++)
-            {
-                seasonToAdd.addEpisode(new Episode(i+1)); //We fill up the Episodes ArrayList of the Season.
+            for (int i = 0; i < episodes; i++) {
+                seasonToAdd.addEpisode(new Episode(i + 1)); //We fill up the Episodes ArrayList of the Season.
             }
             result.add(seasonToAdd);
         }
         return result;
     }
 
-    private static int[] yearArrayMaker(String s){
+    private static int[] yearArrayMaker (String s){
+
+        if(s.length() < 5){
+            int[] year = new int[1];
+            int yearInt = Integer.parseInt(s);
+            year[0] = yearInt;
+
+            return year;
+        }
+
         int[] year = new int[0];
-        String regex = "(?<yearStart>\\d\\d\\d\\d)-(?<yearEnd>\\d\\d\\d\\d)";
+        String regex = "(?<yearStart>\\d\\d\\d\\d)-(?<yearEnd>\\d\\d\\d\\d)?";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(s);
-        while (m.find()){
+
+        while (m.find()) {
             int startYear = Integer.parseInt(m.group("yearStart"));
 
-            int endYear = 2020;
+            int endYear;
 
-            if(!m.group("yearEnd").isEmpty()){
+            if (s.charAt(s.length() - 1) == '-') {
+                endYear = 2020;
+            } else {
                 endYear = Integer.parseInt(m.group("yearEnd"));
             }
 
-            int totalSeasons = (endYear - startYear)+1;
-            year = new int[totalSeasons];
+            int totalYears = (endYear - startYear) + 1;
+            year = new int[totalYears];
 
-            for(int i = 0; i < totalSeasons; i++){
+            for (int i = 0; i < totalYears; i++) {
                 year[i] = startYear + i;
             }
 
         }
+
 
         return year;
     }
