@@ -179,6 +179,7 @@ public class Controller implements Initializable{
 
             // set Alignment of pane
             tile_pane.setAlignment(Pos.TOP_CENTER);
+            tile_pane.setHgap(25);
             root.setCenter(scrollPane);
 
 
