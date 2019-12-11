@@ -134,14 +134,17 @@ public class Controller implements Initializable{
         try {
 
             tile_pane.setVgap(10);
-            tile_pane.setHgap(50);
+            tile_pane.setHgap(45);
 
             for (Object o : arrayList) {
                 Watchable w = (Watchable) o;
-                Label label1 = new Label (w.getTitle());
-                label1.setFont(Font.font("Times New Roman",18));
-                label1.setWrapText(true);
-                label1.setMaxWidth(w.getImg().getWidth());
+                Label label = new Label (w.getTitle());
+                label.setFont(Font.font("Times New Roman",18));
+                label.setMaxHeight(60);
+                label.setMinHeight(60);
+                label.setAlignment(Pos.TOP_LEFT);
+                label.setWrapText(true);
+                label.setMaxWidth(w.getImg().getWidth());
                 ImageView iv = new ImageView(w.getImg());
                 iv.setOnMouseClicked(e -> System.out.println(w.getTitle()));
 
@@ -156,7 +159,7 @@ public class Controller implements Initializable{
                 // ------
 
                 VBox vBox = new VBox();
-                vBox.getChildren().addAll(iv,label1);
+                vBox.getChildren().addAll(iv,label);
                 tile_pane.getChildren().add(vBox);
 
                 iv.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -179,7 +182,8 @@ public class Controller implements Initializable{
 
             // set Alignment of pane
             tile_pane.setAlignment(Pos.TOP_CENTER);
-            tile_pane.setHgap(25);
+            Insets insets = new Insets(40,0,0,0);
+            tile_pane.setPadding(insets);
             root.setCenter(scrollPane);
 
 
