@@ -21,7 +21,7 @@
 }
 
 .content-section {
-    -fx-padding: 10 10 10 10;
+    -fx-padding: 20;
     -fx-wrap-text: true;
 
 }

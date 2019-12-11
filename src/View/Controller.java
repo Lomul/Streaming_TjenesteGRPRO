@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.ComboBox;
@@ -127,6 +128,7 @@ public class Controller implements Initializable{
         TilePane tile_pane = new TilePane();
         ScrollPane scrollPane = new ScrollPane(tile_pane);
         scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
         BorderPane root = new BorderPane(scrollPane);
 
         try {
@@ -177,6 +179,7 @@ public class Controller implements Initializable{
 
             // set Alignment of pane
             tile_pane.setAlignment(Pos.TOP_CENTER);
+            root.setCenter(scrollPane);
 
 
         }catch (Exception e)
