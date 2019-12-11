@@ -26,7 +26,10 @@ import java.util.ArrayList;
 
 public class Main extends Application {
 
+    public static boolean loggedIn;
+
     public void start(Stage stage) throws IOException {
+        loggedIn = false;
         Parent root1 = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
 
         try {

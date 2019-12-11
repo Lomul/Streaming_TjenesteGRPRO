@@ -8,6 +8,9 @@
 <?import java.net.URL?>
 
 
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <BorderPane fx:controller="View.Controller" xmlns:fx="http://javafx.com/fxml">
     <top>
         <BorderPane styleClass="header-section">
@@ -41,11 +44,9 @@
         <VBox styleClass="content-section">
             <children>
                 <Label id="content-header" text="Account"></Label>
-                <Label id="content">
-                    <text>
-                        Du er sej
-                    </text>
-                </Label>
+                <Label id="content"></Label>
+                <VBox maxWidth="300" fx:id="accountInfo">
+                </VBox>
             </children>
         </VBox>
     </center>

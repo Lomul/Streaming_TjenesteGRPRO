@@ -20,7 +20,6 @@ import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.fxml.*;
 import javafx.scene.control.Button;
-
 import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,7 +52,28 @@ public class Controller implements Initializable{
     private void changeSceneToAccount(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("account_scene.fxml"));
         setScene(event, root);
+        VBox vBox = (VBox) root.lookup("#accountInfo");
 
+        if(Main.loggedIn == true) {
+            Label header1 = new Label("Membership");
+            Label content1 = new Label("Username: " + "getUsername()");
+            Label content2 = new Label("Password: " + "getPassword()");
+            Label header2 = new Label("Settings");
+            Label content3 = new Label("Delete Account");
+            Label content4 = new Label("Sign Out");
+
+            header1.setId("content-header2");
+            content1.setId("content-text");
+            content2.setId("content-text");
+            header2.setId("content-header2");
+            content3.setId("content-text");
+            content4.setId("content-text");
+
+            vBox.getChildren().addAll(header1, content1, content2, header2, content3, content4);
+        }else{
+            Label label = new Label("You're not logged in");
+            vBox.getChildren().addAll(label);
+        }
     }
     @FXML
     private void changeSceneToSeries(ActionEvent event) throws Exception {
