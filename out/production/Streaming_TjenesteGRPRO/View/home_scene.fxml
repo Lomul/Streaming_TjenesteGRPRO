@@ -62,11 +62,15 @@
                 <Label id="content">
 
                 </Label>
-                <VBox fx:id="logIn">
-                    <TextField fx:id="temptUsername" promptText="username"></TextField>
+                <VBox fx:id="logIn" spacing="10" alignment="CENTER">
+                    <Label text="Login or Create an account" id="content-header2"></Label>
+                    <TextField fx:id="temptUsername" promptText="username" maxWidth="200"></TextField>
+                    <HBox alignment="CENTER">
                     <Button fx:id="loginButton" alignment="CENTER" text="Login" onAction="#logIn"></Button>
-                    <Button fx:id="adminButton" alignment="CENTER" text="Admin" onAction="#logInAdmin"></Button>
                     <Button fx:id="newButton" alignment="CENTER" text="Create new Account" onAction="#createNewAccount"></Button>
+                    </HBox>
+                    <Label text="&#10;"></Label>
+                    <Button fx:id="adminButton" alignment="CENTER" text="Admin" onAction="#logInAdmin"></Button>
                 </VBox>
             </children>
         </VBox>

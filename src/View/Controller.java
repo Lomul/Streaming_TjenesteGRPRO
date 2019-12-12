@@ -73,8 +73,8 @@ public class Controller implements Initializable{
 
         if(Main.loggedIn == true) {
             Label header1 = new Label("Membership");
-            Label content1 = new Label("Username: " + "getUsername()");
-            Label content2 = new Label("Password: " + "getPassword()");
+            Label content1 = new Label("Username: " + loggedInAs);
+            Label content2 = new Label("Password: " + "****");
             Label header2 = new Label("Settings");
             Button content3 = new Button("Delete Account");
             Button content4 = new Button("Sign Out");
