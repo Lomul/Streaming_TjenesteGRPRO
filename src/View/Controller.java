@@ -297,20 +297,38 @@ public class Controller implements Initializable{
                 return searchedWatchables;
 
             case "Genre":
+                searchTerm = searchTerm.replaceAll("\\s","");
                 for (Movie movie : allMovies)
                 {
                     String genre = movie.getGenre().toLowerCase();
-                    if (genre.contains(searchTerm))
+                    genre = genre.substring(1);
+                    String[] parts = genre.split(", ");
+                    for (int i = 0; i < parts.length; i++)
                     {
-                        searchedWatchables.add(movie);
+                        if (searchTerm.contains(parts[i]))
+                        {
+                            if (searchedWatchables.contains(movie))
+                            {
+                                continue;
+                            }
+                            searchedWatchables.add(movie);
+                        }
                     }
                 }
                 for (Series serie : allSeries)
                 {
                     String genre = serie.getGenre().toLowerCase();
-                    if (genre.contains(searchTerm))
+                    String[] parts2 = genre.split(", ");
+                    for (int i = 0; i < parts2.length; i++)
                     {
-                        searchedWatchables.add(serie);
+                        if (searchTerm.contains(parts2[i]))
+                        {
+                            if (searchedWatchables.contains(serie))
+                            {
+                                continue;
+                            }
+                            searchedWatchables.add(serie);
+                        }
                     }
                 }
                 return searchedWatchables;
