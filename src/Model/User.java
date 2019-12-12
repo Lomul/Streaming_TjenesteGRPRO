@@ -3,9 +3,11 @@ package Model;
 import java.util.ArrayList;
 
 public class User {
+
     String name;
     ArrayList<Watchable> saved;
     ArrayList<Watchable> watched;
+    public static ArrayList<String> users = new ArrayList<>();
 
     public User (String name){
         this.name = name;
@@ -20,6 +22,9 @@ public class User {
     }
     public void changeName(String name){
         this.name = name;
+    }
+    public String getName() {
+        return name;
     }
 
     //TODO: Add to ”Saved”

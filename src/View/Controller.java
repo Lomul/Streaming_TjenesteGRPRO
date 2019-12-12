@@ -33,6 +33,9 @@ public class Controller implements Initializable{
     @FXML private TextField textField;
     @FXML public VBox watchBox;
     @FXML public VBox searchedBox;
+    @FXML public TextField temptUsername;
+    @FXML public Button loginButton;
+    @FXML public Button adminButton;
 
     @FXML
     private void changeSceneToMovies(ActionEvent event) throws Exception {
@@ -47,6 +50,12 @@ public class Controller implements Initializable{
     private void changeSceneToHome(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
         setScene(event, root);
+
+        if(Main.loggedIn == true){
+            VBox vbox = (VBox) root.lookup("#homeContent");
+            VBox vbox2 = (VBox) root.lookup("#logIn");
+            vbox.getChildren().remove(vbox2);
+        }
     }
     @FXML
     private void changeSceneToAccount(ActionEvent event) throws Exception {
@@ -95,10 +104,28 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void logIn(){}
+    private void logIn(ActionEvent event) throws Exception {
+        String username = temptUsername.getText();
+
+        for(String user: Model.User.users){
+            if(username.equals(user)){
+                Main.loggedIn = true;
+                Main.loggedInAs = username;
+                changeSceneToHome(event);
+                break;
+            }else{
+                System.out.println(username + ": Does not exist");
+            }
+        }
+
+    }
 
     @FXML
-    private void logInAdmin(){}
+    private void logInAdmin(ActionEvent event) throws Exception {
+        Main.loggedIn = true;
+        Main.loggedInAs = "ADMIN";
+        changeSceneToHome(event);
+    }
 
     @FXML
     private void searchComboBoxMovies(ActionEvent event) throws Exception {
