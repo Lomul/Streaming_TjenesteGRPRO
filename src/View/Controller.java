@@ -33,9 +33,11 @@ public class Controller implements Initializable{
     @FXML private TextField textField;
     @FXML public VBox watchBox;
     @FXML public VBox searchedBox;
+    public static String currentScene;
 
     @FXML
     private void changeSceneToMovies(ActionEvent event) throws Exception {
+        currentScene = "Movies";
         Parent root = FXMLLoader.load(getClass().getResource("movies_scene.fxml"));
         setScene(event, root);
 
@@ -45,11 +47,13 @@ public class Controller implements Initializable{
     }
     @FXML
     private void changeSceneToHome(ActionEvent event) throws Exception {
+        currentScene = "Home";
         Parent root = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
         setScene(event, root);
     }
     @FXML
     private void changeSceneToAccount(ActionEvent event) throws Exception {
+        currentScene = "Account";
         Parent root = FXMLLoader.load(getClass().getResource("account_scene.fxml"));
         setScene(event, root);
         VBox vBox = (VBox) root.lookup("#accountInfo");
@@ -77,6 +81,7 @@ public class Controller implements Initializable{
     }
     @FXML
     private void changeSceneToSeries(ActionEvent event) throws Exception {
+        currentScene = "Series";
         Parent root = FXMLLoader.load(getClass().getResource("series_scene.fxml"));
         setScene(event, root);
 
@@ -101,39 +106,20 @@ public class Controller implements Initializable{
     private void logInAdmin(){}
 
     @FXML
-    private void searchComboBoxMovies(ActionEvent event) throws Exception {
-        String text = textField.getText();
-        String value = (String) comboBox.getValue();
-        System.out.println("Movies: " + text + " " + value);
-
-        Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
-        setScene(event, root);
-    }
-    @FXML
-    private void searchComboBoxSeries(ActionEvent event) throws Exception {
-        String text = textField.getText();
-        String value = (String) comboBox.getValue();
-        System.out.println("Series: " + text + " " + value);
-
-        Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
-        setScene(event, root);
-    }
-
-    @FXML
     private void searchComboBox(ActionEvent event) throws Exception {
         String text = textField.getText();
         String value = (String) comboBox.getValue();
-
+        String sss = currentScene;
 
         if(getSearched(text).size() <= 0) {
             throw new NoSearchMatched(text);
         }
+        BorderPane searched = makeBorderPane(trimArray(getSearched(text)));
+        Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
 
-            Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
+        setScene(event, root);
 
-            setScene(event, root);
-
-            BorderPane searched = makeBorderPane(getSearched(text));
+        //BorderPane searched = makeBorderPane(getSearched(text));
 
             ComboBox<String> comboBoxValue = (ComboBox<String>) root.lookup("#comboBox");
             comboBoxValue.setValue(value);
@@ -175,7 +161,6 @@ public class Controller implements Initializable{
                 ImageView iv = new ImageView(w.getImg());
                 iv.setOnMouseClicked(e -> System.out.println(w.getTitle()));
 
-                //idk jeg prøver, ok?
                 iv.setOnMouseClicked(e -> {
                     try {
                         changeSceneToWatchablePage(e, w);
@@ -183,7 +168,6 @@ public class Controller implements Initializable{
                         ex.printStackTrace();
                     }
                 });
-                // ------
 
                 VBox vBox = new VBox();
                 vBox.getChildren().addAll(iv,label);
@@ -325,6 +309,36 @@ public class Controller implements Initializable{
 
             default:
                 return null;
+        }
+    }
+
+    private ArrayList<Watchable> trimArray(ArrayList<Watchable> searched)
+    {
+        ArrayList<Watchable> result = new ArrayList<>();
+        switch (currentScene)
+        {
+            case "Movies":
+                for (Watchable w : searched)
+                {
+                    if (w instanceof Movie)
+                    {
+                        result.add(w);
+                    }
+                }
+                return result;
+
+            case "Series":
+                for (Watchable w : searched)
+                {
+                    if (w instanceof Series)
+                    {
+                        result.add(w);
+                    }
+                }
+                return result;
+
+            default:
+                return searched;
         }
     }
 

@@ -60,7 +60,7 @@
                             </FXCollections>
                         </items>
                     </ComboBox>
-                    <Button id="search" text="Search" onAction="#searchComboBoxMovies"></Button>
+                    <Button id="search" text="Search" onAction="#searchComboBox"></Button>
                 </HBox>
                 <Label id="content">
                 </Label>
