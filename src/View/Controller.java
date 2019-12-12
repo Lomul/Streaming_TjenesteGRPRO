@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static Model.User.users;
+import static View.Main.loggedInAs;
+
 public class Controller implements Initializable{
     private ArrayList<Movie> allMovies;
     private ArrayList<Series> allSeries;
@@ -55,6 +58,7 @@ public class Controller implements Initializable{
             VBox vbox = (VBox) root.lookup("#homeContent");
             VBox vbox2 = (VBox) root.lookup("#logIn");
             vbox.getChildren().remove(vbox2);
+            vbox.getChildren().add(new Label(loggedInAs));
         }
     }
     @FXML
@@ -106,25 +110,47 @@ public class Controller implements Initializable{
     @FXML
     private void logIn(ActionEvent event) throws Exception {
         String username = temptUsername.getText();
-
-        for(String user: Model.User.users){
+        Boolean doesNotExist = true;
+        for(String user: users){
             if(username.equals(user)){
+                doesNotExist = false;
                 Main.loggedIn = true;
-                Main.loggedInAs = username;
+                loggedInAs = username;
                 changeSceneToHome(event);
                 break;
-            }else{
-                System.out.println(username + ": Does not exist");
             }
         }
-
+        if(doesNotExist) {System.out.println(username + ": Does not exist");}
     }
 
     @FXML
     private void logInAdmin(ActionEvent event) throws Exception {
         Main.loggedIn = true;
-        Main.loggedInAs = "ADMIN";
+        loggedInAs = "ADMIN";
         changeSceneToHome(event);
+    }
+
+    @FXML
+    private void createNewAccount(ActionEvent event) throws Exception {
+        String username = temptUsername.getText();
+        Boolean doesExist = false;
+        for(String user: users) {
+            if (username.equals(user)) {
+                System.out.println(username + ": Already exist");
+                doesExist = true;
+                break;
+            }
+        }
+        if(!doesExist){
+            //man kan kun lave en bruger så.
+            User newuser = new User(username);
+            users.add(username);
+            Main.loggedIn = true;
+            loggedInAs = username;
+            changeSceneToHome(event);
+        }
+
+
     }
 
     @FXML
