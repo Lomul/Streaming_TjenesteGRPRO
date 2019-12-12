@@ -58,7 +58,7 @@ public class Controller implements Initializable{
             VBox vbox = (VBox) root.lookup("#homeContent");
             VBox vbox2 = (VBox) root.lookup("#logIn");
             vbox.getChildren().remove(vbox2);
-            vbox.getChildren().add(new Label(loggedInAs));
+            vbox.getChildren().add(new Label("Logged in as: " + loggedInAs));
         }
     }
     @FXML
@@ -72,8 +72,23 @@ public class Controller implements Initializable{
             Label content1 = new Label("Username: " + "getUsername()");
             Label content2 = new Label("Password: " + "getPassword()");
             Label header2 = new Label("Settings");
-            Label content3 = new Label("Delete Account");
-            Label content4 = new Label("Sign Out");
+            Button content3 = new Button("Delete Account");
+            Button content4 = new Button("Sign Out");
+
+            content3.setOnAction(e -> {
+                try {
+                    deleteAccount(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+            content4.setOnAction(e -> {
+                try {
+                    signOut(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
 
             header1.setId("content-header2");
             content1.setId("content-text");
@@ -151,6 +166,21 @@ public class Controller implements Initializable{
         }
 
 
+    }
+
+    @FXML
+    private void signOut(ActionEvent event) throws Exception {
+        Main.loggedIn = false;
+        loggedInAs = "";
+        changeSceneToAccount(event);
+    }
+
+    @FXML
+    private void deleteAccount(ActionEvent event) throws Exception {
+        users.remove(loggedInAs);
+        Main.loggedIn = false;
+        loggedInAs = "";
+        changeSceneToAccount(event);
     }
 
     @FXML

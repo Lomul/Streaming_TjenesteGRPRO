@@ -60,9 +60,7 @@
                     <Button id="search" text="Search" onAction="#searchComboBox"></Button>
                 </HBox>
                 <Label id="content">
-                    <text>
-                        Mads er en kæmpe taber :)
-                    </text>
+
                 </Label>
                 <VBox fx:id="logIn">
                     <TextField fx:id="temptUsername" promptText="username"></TextField>
