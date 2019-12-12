@@ -34,6 +34,7 @@ public class Main extends Application {
         loggedInAs = "";
 
         User ADMIN = new User("ADMIN");
+        User.users.add(ADMIN.getName());
 
         Parent root1 = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
 

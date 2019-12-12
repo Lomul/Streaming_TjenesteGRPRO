@@ -36,7 +36,7 @@
     </top>
 
     <center>
-        <VBox styleClass="content-section">
+        <VBox styleClass="content-section" fx:id="homeContent">
             <children>
                 <Label id="content-header" text="Home"></Label>
                 <HBox style="-fx-alignment: center; -fx-spacing: 5px">
@@ -60,13 +60,14 @@
                     <Button id="search" text="Search" onAction="#searchComboBox"></Button>
                 </HBox>
                 <Label id="content">
-                    <text>
-                        Mads er en kæmpe taber :)
-                    </text>
+
                 </Label>
-                <TextField fx:id="user" promptText="username"></TextField>
-                <Button fx:id="loginButton" alignment="CENTER" text="Login" onAction="#logIn"></Button>
-                <Button fx:id="adminButton" alignment="CENTER" text="Admin" onAction="#logInAdmin"></Button>
+                <VBox fx:id="logIn">
+                    <TextField fx:id="temptUsername" promptText="username"></TextField>
+                    <Button fx:id="loginButton" alignment="CENTER" text="Login" onAction="#logIn"></Button>
+                    <Button fx:id="adminButton" alignment="CENTER" text="Admin" onAction="#logInAdmin"></Button>
+                    <Button fx:id="newButton" alignment="CENTER" text="Create new Account" onAction="#createNewAccount"></Button>
+                </VBox>
             </children>
         </VBox>
     </center>

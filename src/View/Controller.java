@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static Model.User.users;
+import static View.Main.loggedInAs;
+
 public class Controller implements Initializable{
     private ArrayList<Movie> allMovies;
     private ArrayList<Series> allSeries;
@@ -34,6 +37,9 @@ public class Controller implements Initializable{
     @FXML public VBox watchBox;
     @FXML public VBox searchedBox;
     public static String currentScene;
+    @FXML public TextField temptUsername;
+    @FXML public Button loginButton;
+    @FXML public Button adminButton;
 
     @FXML
     private void changeSceneToMovies(ActionEvent event) throws Exception {
@@ -50,6 +56,13 @@ public class Controller implements Initializable{
         currentScene = "Home";
         Parent root = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
         setScene(event, root);
+
+        if(Main.loggedIn == true){
+            VBox vbox = (VBox) root.lookup("#homeContent");
+            VBox vbox2 = (VBox) root.lookup("#logIn");
+            vbox.getChildren().remove(vbox2);
+            vbox.getChildren().add(new Label("Logged in as: " + loggedInAs));
+        }
     }
     @FXML
     private void changeSceneToAccount(ActionEvent event) throws Exception {
@@ -63,8 +76,23 @@ public class Controller implements Initializable{
             Label content1 = new Label("Username: " + "getUsername()");
             Label content2 = new Label("Password: " + "getPassword()");
             Label header2 = new Label("Settings");
-            Label content3 = new Label("Delete Account");
-            Label content4 = new Label("Sign Out");
+            Button content3 = new Button("Delete Account");
+            Button content4 = new Button("Sign Out");
+
+            content3.setOnAction(e -> {
+                try {
+                    deleteAccount(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+            content4.setOnAction(e -> {
+                try {
+                    signOut(e);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
 
             header1.setId("content-header2");
             content1.setId("content-text");
@@ -100,10 +128,65 @@ public class Controller implements Initializable{
     }
 
     @FXML
-    private void logIn(){}
+    private void logIn(ActionEvent event) throws Exception {
+        String username = temptUsername.getText();
+        Boolean doesNotExist = true;
+        for(String user: users){
+            if(username.equals(user)){
+                doesNotExist = false;
+                Main.loggedIn = true;
+                loggedInAs = username;
+                changeSceneToHome(event);
+                break;
+            }
+        }
+        if(doesNotExist) {System.out.println(username + ": Does not exist");}
+    }
 
     @FXML
-    private void logInAdmin(){}
+    private void logInAdmin(ActionEvent event) throws Exception {
+        Main.loggedIn = true;
+        loggedInAs = "ADMIN";
+        changeSceneToHome(event);
+    }
+
+    @FXML
+    private void createNewAccount(ActionEvent event) throws Exception {
+        String username = temptUsername.getText();
+        Boolean doesExist = false;
+        for(String user: users) {
+            if (username.equals(user)) {
+                System.out.println(username + ": Already exist");
+                doesExist = true;
+                break;
+            }
+        }
+        if(!doesExist){
+            //man kan kun lave en bruger så.
+            User newuser = new User(username);
+            users.add(username);
+            Main.loggedIn = true;
+            loggedInAs = username;
+            changeSceneToHome(event);
+        }
+
+
+    }
+
+    @FXML
+    private void signOut(ActionEvent event) throws Exception {
+        Main.loggedIn = false;
+        loggedInAs = "";
+        changeSceneToAccount(event);
+    }
+
+    @FXML
+    private void deleteAccount(ActionEvent event) throws Exception {
+        users.remove(loggedInAs);
+        Main.loggedIn = false;
+        loggedInAs = "";
+        changeSceneToAccount(event);
+    }
 
     @FXML
     private void searchComboBox(ActionEvent event) throws Exception {
