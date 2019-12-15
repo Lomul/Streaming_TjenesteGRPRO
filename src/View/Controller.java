@@ -483,16 +483,14 @@ public class Controller implements Initializable{
             ComboBox<Episode> episodeList
                     = new ComboBox<Episode>(FXCollections.observableList(e));
             episodeList.setValue(s.getSeasons().get(0).getEpisodes().get(0));
-            play.setOnAction((e2)->{
-                addEpToWatched(episodeList.getValue());
-                play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-            });
+            episodeList.setOnAction((e1)-> playSetActionSeries(episodeList, play));
+            playSetActionSeries(episodeList, play);
 
             seasonList.setId("seasonList");
             seasonList.setOnAction(e2 -> {
                 episodeList.setItems(FXCollections.observableList(seasonList.getValue().getEpisodes()));
                 episodeList.setValue(seasonList.getValue().getEpisodes().get(0));
-                play.setOnAction((e3)->addEpToWatched(episodeList.getValue()));
+                playSetActionSeries(episodeList, play);
             });
 
             vBoxDetail.getChildren().addAll(seasonList);
@@ -504,6 +502,15 @@ public class Controller implements Initializable{
         vBoxDetail.getChildren().addAll(hBoxPS);
         vBox.getChildren().add(hBox);
 
+    }
+
+    public void playSetActionSeries(ComboBox<Episode> episodeList, Button play){
+        boolean watchedExist = false; //tjek først
+        if(!watchedExist){
+        addEpToWatched(episodeList.getValue());
+        }else {
+            play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        }
     }
 
     public void addToSaved(Watchable w){
