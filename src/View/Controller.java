@@ -568,13 +568,13 @@ public class Controller implements Initializable{
         }
     }
     public void addToWatched(Watchable w, Button play){
-        play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         if(loggedInAsUser.getWatched().contains(w)){
             System.out.println("You have watched this movie again");
         }else{
             loggedInAsUser.addWatched(w);
             System.out.println("You have now watched this movie");
         }
+        updatePlay(w,null,play);
     }
 
     public static double convertStringToDouble(String s)
