@@ -47,6 +47,9 @@
 #content-text {
     -fx-wrap-text: true;
     -fx-font-size: 16px;
+    -fx-background-color: none;
+    -fx-border: none;
+    -fx-padding: 0;
 }
 
 #content {

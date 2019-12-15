@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
+import javafx.scene.paint.Color;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -482,20 +483,60 @@ public class Controller implements Initializable{
             ComboBox<Episode> episodeList
                     = new ComboBox<Episode>(FXCollections.observableList(e));
             episodeList.setValue(s.getSeasons().get(0).getEpisodes().get(0));
+            play.setOnAction((e2)->{
+                addEpToWatched(episodeList.getValue());
+                play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+            });
 
             seasonList.setId("seasonList");
             seasonList.setOnAction(e2 -> {
                 episodeList.setItems(FXCollections.observableList(seasonList.getValue().getEpisodes()));
                 episodeList.setValue(seasonList.getValue().getEpisodes().get(0));
+                play.setOnAction((e3)->addEpToWatched(episodeList.getValue()));
             });
 
             vBoxDetail.getChildren().addAll(seasonList);
             vBoxDetail.getChildren().addAll(episodeList);
+        }else{
+            save.setOnAction((e)->addToSaved(w));
         }
 
         vBoxDetail.getChildren().addAll(hBoxPS);
         vBox.getChildren().add(hBox);
 
+    }
+
+    public void addToSaved(Watchable w){
+        // get user with username = loggedInAs
+        //User.getSaved();
+        boolean savedExist = false;
+        if(!savedExist){
+            if(w instanceof Series){
+                //User.addSaved(w);
+                System.out.println("You have now saved this series");
+            }
+            if(w instanceof Movie){
+                //User.addSaved(w);
+                System.out.println("You have now saved this movie");
+            }
+        }
+    }
+
+    public void addEpToWatched(Episode e){
+        // get user with username = loggedInAs
+        boolean watchedExist = false;
+        if(!watchedExist){
+            //User.addWatched(e);
+            System.out.println("You have now watched this episode");
+        }
+    }
+    public void addToWatched(Watchable w){
+        // get user with username = loggedInAs
+        boolean watchedExist = false;
+        if(!watchedExist){
+            //User.addWatched(e);
+            System.out.println("You have now watched this movie");
+        }
     }
 
     public static double convertStringToDouble(String s)
