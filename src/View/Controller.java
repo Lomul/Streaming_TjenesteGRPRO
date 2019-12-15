@@ -505,12 +505,17 @@ public class Controller implements Initializable{
     }
 
     public void playSetActionSeries(ComboBox<Episode> episodeList, Button play){
-        boolean watchedExist = false; //tjek først
+        boolean watchedExist = false;
         if(!watchedExist){
-        addEpToWatched(episodeList.getValue());
-        }else {
+            play.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+        }else{
             play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         }
+
+        play.setOnAction((e)->{
+                addEpToWatched(episodeList.getValue());
+                play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        });
     }
 
     public void addToSaved(Watchable w){
