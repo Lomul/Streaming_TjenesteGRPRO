@@ -28,11 +28,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static Model.User.users;
-import static View.Main.loggedInAs;
+import static View.Main.loggedInAsUser;
 
 public class Controller implements Initializable{
     private ArrayList<Movie> allMovies;
     private ArrayList<Series> allSeries;
+    private User ADMIN;
     @FXML private ComboBox<String> comboBox;
     @FXML private TextField textField;
     @FXML public VBox watchBox;
@@ -62,7 +63,7 @@ public class Controller implements Initializable{
             VBox vbox = (VBox) root.lookup("#homeContent");
             VBox vbox2 = (VBox) root.lookup("#logIn");
             vbox.getChildren().remove(vbox2);
-            vbox.getChildren().add(new Label("Logged in as: " + loggedInAs));
+            vbox.getChildren().add(new Label("Logged in as: " + loggedInAsUser.getName()));
         }
     }
     @FXML
@@ -74,7 +75,7 @@ public class Controller implements Initializable{
 
         if(Main.loggedIn == true) {
             Label header1 = new Label("Membership");
-            Label content1 = new Label("Username: " + loggedInAs);
+            Label content1 = new Label("Username: " + loggedInAsUser.getName());
             Label content2 = new Label("Password: " + "****");
             Label header2 = new Label("Settings");
             Button content3 = new Button("Delete Account");
@@ -132,11 +133,11 @@ public class Controller implements Initializable{
     private void logIn(ActionEvent event) throws Exception {
         String username = temptUsername.getText();
         Boolean doesNotExist = true;
-        for(String user: users){
-            if(username.equals(user)){
+        for(User user: users){
+            if(username.equals(user.getName())){
                 doesNotExist = false;
                 Main.loggedIn = true;
-                loggedInAs = username;
+                loggedInAsUser = user;
                 changeSceneToHome(event);
                 break;
             }
@@ -147,7 +148,7 @@ public class Controller implements Initializable{
     @FXML
     private void logInAdmin(ActionEvent event) throws Exception {
         Main.loggedIn = true;
-        loggedInAs = "ADMIN";
+        loggedInAsUser = ADMIN;
         changeSceneToHome(event);
     }
 
@@ -155,19 +156,18 @@ public class Controller implements Initializable{
     private void createNewAccount(ActionEvent event) throws Exception {
         String username = temptUsername.getText();
         Boolean doesExist = false;
-        for(String user: users) {
-            if (username.equals(user)) {
+        for(User user: users) {
+            if (username.equals(user.getName())) {
                 System.out.println(username + ": Already exist");
                 doesExist = true;
                 break;
             }
         }
         if(!doesExist){
-            //man kan kun lave en bruger så.
             User newuser = new User(username);
-            users.add(username);
+            users.add(newuser);
             Main.loggedIn = true;
-            loggedInAs = username;
+            loggedInAsUser = newuser;
             changeSceneToHome(event);
         }
 
@@ -177,15 +177,15 @@ public class Controller implements Initializable{
     @FXML
     private void signOut(ActionEvent event) throws Exception {
         Main.loggedIn = false;
-        loggedInAs = "";
+        loggedInAsUser = null;
         changeSceneToAccount(event);
     }
 
     @FXML
     private void deleteAccount(ActionEvent event) throws Exception {
-        users.remove(loggedInAs);
+        users.remove(loggedInAsUser);
         Main.loggedIn = false;
-        loggedInAs = "";
+        loggedInAsUser = null;
         changeSceneToAccount(event);
     }
 
@@ -483,20 +483,32 @@ public class Controller implements Initializable{
             ComboBox<Episode> episodeList
                     = new ComboBox<Episode>(FXCollections.observableList(e));
             episodeList.setValue(s.getSeasons().get(0).getEpisodes().get(0));
-            episodeList.setOnAction((e1)-> playSetActionSeries(episodeList, play));
-            playSetActionSeries(episodeList, play);
+            episodeList.setOnAction((e1)-> play.setOnAction((e4)->addEpToWatched(episodeList.getValue(), play)));
+            play.setOnAction((e2)->addEpToWatched(episodeList.getValue(), play));
 
             seasonList.setId("seasonList");
             seasonList.setOnAction(e2 -> {
                 episodeList.setItems(FXCollections.observableList(seasonList.getValue().getEpisodes()));
                 episodeList.setValue(seasonList.getValue().getEpisodes().get(0));
-                playSetActionSeries(episodeList, play);
+                play.setOnAction((e3)->addEpToWatched(episodeList.getValue(), play));
             });
+
+            boolean watchedExist = false;
+            for(Episode episode : loggedInAsUser.getEpWatched()){
+                if(episodeList.getValue() == episode){ watchedExist = true;}
+            }
+            if(!watchedExist){
+                play.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+            }else{
+                play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+            }
 
             vBoxDetail.getChildren().addAll(seasonList);
             vBoxDetail.getChildren().addAll(episodeList);
-        }else{
-            save.setOnAction((e)->addToSaved(w));
+        }else{ //if w instance of Movie
+            play.setOnAction((e)->addToWatched(w, play));
+            save.setOnAction((e)->addToSaved(w, save));
+            updatePlay(w,null,play);
         }
 
         vBoxDetail.getChildren().addAll(hBoxPS);
@@ -504,49 +516,63 @@ public class Controller implements Initializable{
 
     }
 
-    public void playSetActionSeries(ComboBox<Episode> episodeList, Button play){
+    public void updatePlay(Watchable w, ComboBox<Episode> episodeList, Button play){
         boolean watchedExist = false;
+        if(w instanceof Movie) {
+            if (loggedInAsUser.getWatched().contains(w)) {
+                watchedExist = true;
+            }
+
+        }else{
+            for(Episode episode : loggedInAsUser.getEpWatched()){
+                if(episodeList.getValue() == episode){ watchedExist = true;}
+            }
+        }
         if(!watchedExist){
             play.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+            System.out.println("This is not watched");
         }else{
             play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+            System.out.println("This is watched");
         }
-
-        play.setOnAction((e)->{
-                addEpToWatched(episodeList.getValue());
-                play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-        });
+        System.out.println(loggedInAsUser.getWatched());
     }
 
-    public void addToSaved(Watchable w){
-        // get user with username = loggedInAs
-        //User.getSaved();
+
+    public void addToSaved(Watchable w, Button save){
+        save.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         boolean savedExist = false;
         if(!savedExist){
             if(w instanceof Series){
-                //User.addSaved(w);
-                System.out.println("You have now saved this series");
+                loggedInAsUser.addSaved(w);
+                System.out.println("You have now saved this series:" + w.getTitle());
             }
             if(w instanceof Movie){
-                //User.addSaved(w);
-                System.out.println("You have now saved this movie");
+                loggedInAsUser.addSaved(w);
+                System.out.println("You have now saved this movie: " + w.getTitle());
             }
         }
     }
 
-    public void addEpToWatched(Episode e){
-        // get user with username = loggedInAs
+    public void addEpToWatched(Episode e, Button play){
+        play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         boolean watchedExist = false;
+        for(Episode episode: loggedInAsUser.getEpWatched()){
+            if(episode == e){ watchedExist = true; }
+        }
         if(!watchedExist){
-            //User.addWatched(e);
+            loggedInAsUser.addEpWatched(e);
             System.out.println("You have now watched this episode");
+        }else{
+            System.out.println("You have watched this episode again");
         }
     }
-    public void addToWatched(Watchable w){
-        // get user with username = loggedInAs
-        boolean watchedExist = false;
-        if(!watchedExist){
-            //User.addWatched(e);
+    public void addToWatched(Watchable w, Button play){
+        play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        if(loggedInAsUser.getWatched().contains(w)){
+            System.out.println("You have watched this movie again");
+        }else{
+            loggedInAsUser.addWatched(w);
             System.out.println("You have now watched this movie");
         }
     }
@@ -564,9 +590,12 @@ public class Controller implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ADMIN = new User("ADMIN");
+        User.users.add(ADMIN);
         try {
             allMovies = MovieCreator.createMovies();
             allSeries = SeriesCreator.createSeries();
+
         }catch (Exception e)
         {
             System.out.println(e.getMessage());

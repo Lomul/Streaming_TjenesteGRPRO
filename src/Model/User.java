@@ -7,12 +7,14 @@ public class User {
     String name;
     ArrayList<Watchable> saved;
     ArrayList<Watchable> watched;
-    public static ArrayList<String> users = new ArrayList<>();
+    ArrayList<Episode> epWatched;
+    public static ArrayList<User> users = new ArrayList<>();
 
     public User (String name){
         this.name = name;
         saved = new ArrayList<>();
         watched = new ArrayList<>();
+        epWatched = new ArrayList<>();
     }
     public void addSaved(Watchable watchable){
         saved.add(watchable);
@@ -20,9 +22,17 @@ public class User {
     public void addWatched(Watchable watchable){
         watched.add(watchable);
     }
-    public void changeName(String name){
-        this.name = name;
+    public void addEpWatched(Episode episode){
+        epWatched.add(episode);
     }
+
+    public ArrayList<Watchable> getSaved() {return saved;}
+
+    public ArrayList<Watchable> getWatched() {return watched;}
+
+    public ArrayList<Episode> getEpWatched() {return epWatched;}
+
+    public void changeName(String name){this.name = name;}
     public String getName() {
         return name;
     }
