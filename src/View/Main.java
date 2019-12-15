@@ -28,13 +28,12 @@ public class Main extends Application {
 
     public static boolean loggedIn;
     public static String loggedInAs;
+    public static User loggedInAsUser;
 
     public void start(Stage stage) throws IOException {
         loggedIn = false;
         loggedInAs = "";
-
-        User ADMIN = new User("ADMIN");
-        User.users.add(ADMIN.getName());
+        loggedInAsUser = null;
 
         Parent root1 = FXMLLoader.load(getClass().getResource("home_scene.fxml"));
 
