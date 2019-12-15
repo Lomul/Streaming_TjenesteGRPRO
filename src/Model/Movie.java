@@ -3,17 +3,11 @@ package Model;
 import javafx.scene.image.Image;
 
 public class Movie extends Watchable{
-    public boolean watched = false;
     String year;
 
     public Movie (String title, double rating, String year, String genre, Image img) throws Exception {
         super(title,rating,genre,img);
         this.year = year;
-    }
-
-    public void setWatched(boolean watched)
-    {
-        this.watched = watched;
     }
 
     public String getYear(){
