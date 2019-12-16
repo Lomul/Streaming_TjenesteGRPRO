@@ -498,14 +498,15 @@ public class Controller implements Initializable{
                 if(episodeList.getValue() == episode){ watchedExist = true;}
             }
             if(!watchedExist){
-                play.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+                play.setStyle("-fx-color: white");
             }else{
-                play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+                play.setStyle("-fx-color: red");
             }
 
             vBoxDetail.getChildren().addAll(seasonList);
             vBoxDetail.getChildren().addAll(episodeList);
         }else{ //if w instance of Movie
+            System.out.println(w);
             play.setOnAction((e)->addToWatched(w, play));
             save.setOnAction((e)->addToSaved(w, save));
             updatePlay(w,null,play);
@@ -520,27 +521,33 @@ public class Controller implements Initializable{
         boolean watchedExist = false;
         if(w instanceof Movie) {
             if (loggedInAsUser.getWatched().contains(w)) {
-                watchedExist = true;
+                play.setStyle("-fx-color: red");
+                System.out.println("This is watched");
+            }else{
+                play.setStyle("-fx-color: white");
             }
 
-        }else{
-            for(Episode episode : loggedInAsUser.getEpWatched()){
-                if(episodeList.getValue() == episode){ watchedExist = true;}
+        }
+        if(w instanceof Series){
+            if(loggedInAsUser.getEpWatched().contains(episodeList.getValue())){
+                play.setStyle("-fx-color: red");
+            }
+            else{
+                play.setStyle("-fx-color: white");
             }
         }
-        if(!watchedExist){
+        /*if(!watchedExist){
             play.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
             System.out.println("This is not watched");
         }else{
             play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
             System.out.println("This is watched");
-        }
-        System.out.println(loggedInAsUser.getWatched());
+        }*/
     }
 
 
     public void addToSaved(Watchable w, Button save){
-        save.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        save.setStyle("-fx-color: red");
         boolean savedExist = false;
         if(!savedExist){
             if(w instanceof Series){
@@ -555,16 +562,14 @@ public class Controller implements Initializable{
     }
 
     public void addEpToWatched(Episode e, Button play){
-        play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        //updatePlay();
+        play.setStyle("-fx-color: red");
         boolean watchedExist = false;
-        for(Episode episode: loggedInAsUser.getEpWatched()){
-            if(episode == e){ watchedExist = true; }
-        }
-        if(!watchedExist){
+        if(loggedInAsUser.getEpWatched().contains(e)){
+            System.out.println("You have watched this episode again");
+        } else{
             loggedInAsUser.addEpWatched(e);
             System.out.println("You have now watched this episode");
-        }else{
-            System.out.println("You have watched this episode again");
         }
     }
     public void addToWatched(Watchable w, Button play){
@@ -599,6 +604,9 @@ public class Controller implements Initializable{
         }catch (Exception e)
         {
             System.out.println(e.getMessage());
+        }
+        for(int i=0;i<100;i++) {
+            ADMIN.addWatched(allMovies.get(i));
         }
     }
 }
