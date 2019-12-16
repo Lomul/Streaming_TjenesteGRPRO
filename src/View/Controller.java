@@ -80,6 +80,8 @@ public class Controller implements Initializable{
             Label header2 = new Label("Settings");
             Button content3 = new Button("Delete Account");
             Button content4 = new Button("Sign Out");
+            Button watched = new Button("Show watched");
+            Button saved = new Button("Show saved");
 
             content3.setOnAction(e -> {
                 try {
@@ -95,6 +97,30 @@ public class Controller implements Initializable{
                     ex.printStackTrace();
                 }
             });
+            watched.setOnAction(e -> {
+                try {
+                    currentScene = "Watched";
+                    VBox mB = (VBox) root.lookup("#watchedBox");
+                    mB.getChildren().clear();
+                    BorderPane p = makeBorderPane(loggedInAsUser.getWatched());
+                    mB.getChildren().add(p);
+                }catch (Exception exception)
+                {
+                    System.out.println(exception.getMessage());
+                }
+            });
+            saved.setOnAction(e -> {
+                try {
+                    currentScene = "Saved";
+                    VBox mB = (VBox) root.lookup("#watchedBox");
+                    mB.getChildren().clear();
+                    BorderPane p = makeBorderPane(loggedInAsUser.getSaved());
+                    mB.getChildren().add(p);
+                }catch (Exception exception)
+                {
+                    System.out.println(exception.getMessage());
+                }
+            });
 
             header1.setId("content-header2");
             content1.setId("content-text");
@@ -103,7 +129,7 @@ public class Controller implements Initializable{
             content3.setId("content-text");
             content4.setId("content-text");
 
-            vBox.getChildren().addAll(header1, content1, content2, header2, content3, content4);
+            vBox.getChildren().addAll(header1, content1, content2, header2, content3, content4, watched, saved);
         }else{
             Label label = new Label("You're not logged in");
             vBox.getChildren().addAll(label);
@@ -193,7 +219,6 @@ public class Controller implements Initializable{
     private void searchComboBox(ActionEvent event) throws Exception {
         String text = textField.getText();
         String value = (String) comboBox.getValue();
-        String sss = currentScene;
 
         if(getSearched(text).size() <= 0) {
             throw new NoSearchMatched(text);
@@ -603,16 +628,6 @@ public class Controller implements Initializable{
         {
             System.out.println(e.getMessage());
         }
-    }
-
-    public void changeScenetoWatched(ActionEvent event) throws Exception {
-        currentScene = "Saved";
-        Parent root = FXMLLoader.load(getClass().getResource("account_scene.fxml"));
-        setScene(event, root);
-
-        VBox mB = (VBox) root.lookup("#watchedBox");
-        BorderPane p = makeBorderPane(loggedInAsUser.getWatched());
-        mB.getChildren().add(p);
     }
 }
 

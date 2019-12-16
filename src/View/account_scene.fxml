@@ -47,7 +47,6 @@
                 <Label id="content"></Label>
                 <VBox maxWidth="300" fx:id="accountInfo">
                 </VBox>
-                <Button id="watched" text="Show watched" onAction="#changeScenetoWatched"></Button>
                 <VBox fx:id="watchedBox"></VBox>
             </children>
         </VBox>
