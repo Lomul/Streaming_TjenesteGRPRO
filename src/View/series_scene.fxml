@@ -42,6 +42,7 @@
         <VBox styleClass="content-section">
             <children>
                 <Label id="content-header" text="Series"></Label>
+                <VBox fx:id="searchErrorAdd" style="-fx-alignment: center;">
                 <HBox style="-fx-alignment: center; -fx-spacing: 5px">
                     <ImageView styleClass="searchimg"
                                pickOnBounds="true" preserveRatio="true" fitWidth="22">
@@ -62,7 +63,8 @@
                     </ComboBox>
                     <Button id="search" text="Search" onAction="#searchComboBox"></Button>
                 </HBox>
-
+                    <Label text=" " fx:id="ErrorLabel"></Label>
+                </VBox>
                 <Label id="content">
                 </Label>
                 <VBox fx:id="watchBox">

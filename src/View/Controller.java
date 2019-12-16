@@ -80,8 +80,6 @@ public class Controller implements Initializable{
             Label header2 = new Label("Settings");
             Button content3 = new Button("Delete Account");
             Button content4 = new Button("Sign Out");
-            Button watched = new Button("Show watched");
-            Button saved = new Button("Show saved");
 
             content3.setOnAction(e -> {
                 try {
@@ -97,30 +95,6 @@ public class Controller implements Initializable{
                     ex.printStackTrace();
                 }
             });
-            watched.setOnAction(e -> {
-                try {
-                    currentScene = "Watched";
-                    VBox mB = (VBox) root.lookup("#watchedBox");
-                    mB.getChildren().clear();
-                    BorderPane p = makeBorderPane(loggedInAsUser.getWatched());
-                    mB.getChildren().add(p);
-                }catch (Exception exception)
-                {
-                    System.out.println(exception.getMessage());
-                }
-            });
-            saved.setOnAction(e -> {
-                try {
-                    currentScene = "Saved";
-                    VBox mB = (VBox) root.lookup("#watchedBox");
-                    mB.getChildren().clear();
-                    BorderPane p = makeBorderPane(loggedInAsUser.getSaved());
-                    mB.getChildren().add(p);
-                }catch (Exception exception)
-                {
-                    System.out.println(exception.getMessage());
-                }
-            });
 
             header1.setId("content-header2");
             content1.setId("content-text");
@@ -129,7 +103,7 @@ public class Controller implements Initializable{
             content3.setId("content-text");
             content4.setId("content-text");
 
-            vBox.getChildren().addAll(header1, content1, content2, header2, content3, content4, watched, saved);
+            vBox.getChildren().addAll(header1, content1, content2, header2, content3, content4);
         }else{
             Label label = new Label("You're not logged in");
             vBox.getChildren().addAll(label);
@@ -218,13 +192,21 @@ public class Controller implements Initializable{
     @FXML
     private void searchComboBox(ActionEvent event) throws Exception {
         String text = textField.getText();
+        if(text.length() <= 0){
+            ErrorLabel.setText("\nMust contain 1 or more symbols");
+            ErrorLabel.setTextFill(Color.web("ff0000"));
+        }else {
+
+            String value = (String) comboBox.getValue();
+            String sss = currentScene;
         String value = (String) comboBox.getValue();
 
-        if(getSearched(text).size() <= 0) {
-            throw new NoSearchMatched(text);
-        }
-        BorderPane searched = makeBorderPane(trimArray(getSearched(text)));
-        Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
+            if (getSearched(text).size() <= 0) {
+                throw new NoSearchMatched(text);
+            }
+
+            BorderPane searched = makeBorderPane(trimArray(getSearched(text)));
+            Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
 
         setScene(event, root);
 
@@ -242,7 +224,7 @@ public class Controller implements Initializable{
             /*System.out.println(searchLabel.getText());*/
             searchLabel.setText(newtext);
             /*System.out.println(searchLabel.getText());*/
-
+        }
     }
 
     private BorderPane makeBorderPane(ArrayList arrayList)
@@ -272,7 +254,15 @@ public class Controller implements Initializable{
 
                 iv.setOnMouseClicked(e -> {
                     try {
-                        changeSceneToWatchablePage(e, w);
+                        if(loggedInAsUser == null){
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Warning Dialog");
+                            alert.setHeaderText("You are not logged in!");
+                            alert.setContentText("You have to be logged in to see details.\nGo to Home to log in");
+                            alert.showAndWait();
+                        }else {
+                            changeSceneToWatchablePage(e, w);
+                        }
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -628,6 +618,16 @@ public class Controller implements Initializable{
         {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void changeScenetoWatched(ActionEvent event) throws Exception {
+        currentScene = "Saved";
+        Parent root = FXMLLoader.load(getClass().getResource("account_scene.fxml"));
+        setScene(event, root);
+
+        VBox mB = (VBox) root.lookup("#watchedBox");
+        BorderPane p = makeBorderPane(loggedInAsUser.getWatched());
+        mB.getChildren().add(p);
     }
 }
 
