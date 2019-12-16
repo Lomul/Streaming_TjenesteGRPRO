@@ -517,15 +517,15 @@ public class Controller implements Initializable{
 
     public void updatePlay(Watchable w, ComboBox<Episode> episodeList, Button play){
         if(w instanceof Movie) {
-            if (loggedInAsUser.getWatched().contains(w)) {
-                play.setStyle("-fx-color: red");
-                System.out.println("This is watched");
-            }else{
-                play.setStyle("-fx-color: white");
+            for(Watchable watchable : loggedInAsUser.getWatched()){
+                if(watchable.getTitle().equals(w.getTitle())){
+                    play.setStyle("-fx-color: red");
+                    System.out.println("This is watched");
+                }
             }
 
         }
-        if(w instanceof Series){
+        /*if(w instanceof Series){
             if(loggedInAsUser.getEpWatched().contains(episodeList.getValue())){
                 play.setStyle("-fx-color: red");
             }
@@ -533,7 +533,7 @@ public class Controller implements Initializable{
                 play.setStyle("-fx-color: white");
             }
         }
-        System.out.println(loggedInAsUser.getWatched().contains(w));
+        System.out.println(loggedInAsUser.getWatched().contains(w));*/
     }
 
 
@@ -564,9 +564,15 @@ public class Controller implements Initializable{
         }
     }
     public void addToWatched(Watchable w, Button play){
-        if(loggedInAsUser.getWatched().contains(w)){
-            System.out.println("You have watched this movie again");
-        }else{
+        boolean exist = false;
+        for(Watchable watchable : loggedInAsUser.getWatched()){
+            if(watchable.getTitle().equals(w.getTitle())){
+                System.out.println("You have now watched this movie again");
+                exist = true;
+                break;
+            }
+        }
+        if(!exist){
             loggedInAsUser.addWatched(w);
             System.out.println("You have now watched this movie");
         }
@@ -591,13 +597,9 @@ public class Controller implements Initializable{
         try {
             allMovies = MovieCreator.createMovies();
             allSeries = SeriesCreator.createSeries();
-
         }catch (Exception e)
         {
             System.out.println(e.getMessage());
-        }
-        for(int i=0;i<100;i++) {
-            ADMIN.addWatched(allMovies.get(i));
         }
     }
 }
