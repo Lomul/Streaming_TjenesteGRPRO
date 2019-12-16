@@ -9,18 +9,19 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
-import javafx.scene.paint.Color;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.fxml.*;
-import javafx.scene.control.Button;
+
 import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class Controller implements Initializable{
     @FXML public TextField temptUsername;
     @FXML public Button loginButton;
     @FXML public Button adminButton;
+    @FXML public Label ErrorLabel;
 
     @FXML
     private void changeSceneToMovies(ActionEvent event) throws Exception {
@@ -199,7 +201,6 @@ public class Controller implements Initializable{
 
             String value = (String) comboBox.getValue();
             String sss = currentScene;
-        String value = (String) comboBox.getValue();
 
             if (getSearched(text).size() <= 0) {
                 throw new NoSearchMatched(text);
