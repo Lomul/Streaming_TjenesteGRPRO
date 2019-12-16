@@ -493,7 +493,7 @@ public class Controller implements Initializable{
                 play.setOnAction((e3)->addEpToWatched(episodeList.getValue(), play));
             });
 
-            boolean watchedExist = false;
+            /*boolean watchedExist = false;
             for(Episode episode : loggedInAsUser.getEpWatched()){
                 if(episodeList.getValue() == episode){ watchedExist = true;}
             }
@@ -501,12 +501,11 @@ public class Controller implements Initializable{
                 play.setStyle("-fx-color: white");
             }else{
                 play.setStyle("-fx-color: red");
-            }
+            }*/
 
             vBoxDetail.getChildren().addAll(seasonList);
             vBoxDetail.getChildren().addAll(episodeList);
         }else{ //if w instance of Movie
-            System.out.println(w);
             play.setOnAction((e)->addToWatched(w, play));
             save.setOnAction((e)->addToSaved(w, save));
             updatePlay(w,null,play);
@@ -514,11 +513,9 @@ public class Controller implements Initializable{
 
         vBoxDetail.getChildren().addAll(hBoxPS);
         vBox.getChildren().add(hBox);
-
     }
 
     public void updatePlay(Watchable w, ComboBox<Episode> episodeList, Button play){
-        boolean watchedExist = false;
         if(w instanceof Movie) {
             if (loggedInAsUser.getWatched().contains(w)) {
                 play.setStyle("-fx-color: red");
@@ -536,13 +533,7 @@ public class Controller implements Initializable{
                 play.setStyle("-fx-color: white");
             }
         }
-        /*if(!watchedExist){
-            play.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-            System.out.println("This is not watched");
-        }else{
-            play.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-            System.out.println("This is watched");
-        }*/
+        System.out.println(loggedInAsUser.getWatched().contains(w));
     }
 
 
