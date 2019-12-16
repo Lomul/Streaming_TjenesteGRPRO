@@ -520,11 +520,13 @@ public class Controller implements Initializable{
     public void updatePlay(Watchable w, ComboBox<Episode> episodeList, Button play){
         boolean watchedExist = false;
         if(w instanceof Movie) {
-            if (loggedInAsUser.getWatched().contains(w)) {
-                play.setStyle("-fx-color: red");
-                System.out.println("This is watched");
-            }else{
-                play.setStyle("-fx-color: white");
+            for(Watchable m : loggedInAsUser.getWatched()) {
+                if(m.getTitle().equals(w.getTitle())){
+                    play.setStyle("-fx-color: red");
+                    System.out.println("This is watched");
+                }else{
+                    play.setStyle("-fx-color: white");
+                }
             }
 
         }
@@ -605,9 +607,16 @@ public class Controller implements Initializable{
         {
             System.out.println(e.getMessage());
         }
-        for(int i=0;i<100;i++) {
-            ADMIN.addWatched(allMovies.get(i));
-        }
+    }
+
+    public void changeScenetoWatched(ActionEvent event) throws Exception {
+        currentScene = "Saved";
+        Parent root = FXMLLoader.load(getClass().getResource("account_scene.fxml"));
+        setScene(event, root);
+
+        VBox mB = (VBox) root.lookup("#watchedBox");
+        BorderPane p = makeBorderPane(loggedInAsUser.getWatched());
+        mB.getChildren().add(p);
     }
 }
 
