@@ -82,6 +82,8 @@ public class Controller implements Initializable{
             Label header2 = new Label("Settings");
             Button content3 = new Button("Delete Account");
             Button content4 = new Button("Sign Out");
+            Button watched = new Button("Show watched");
+            Button saved = new Button("Show saved");
 
             content3.setOnAction(e -> {
                 try {
@@ -97,6 +99,20 @@ public class Controller implements Initializable{
                     ex.printStackTrace();
                 }
             });
+            watched.setOnAction(e ->{
+                currentScene = "Watched";
+                VBox wB = (VBox) root.lookup("#watchedBox");
+                wB.getChildren().clear();
+                BorderPane p = makeBorderPane(loggedInAsUser.getWatched());
+                wB.getChildren().add(p);
+            });
+            saved.setOnAction(e -> {
+                currentScene = "Saved";
+                VBox wB = (VBox) root.lookup("#watchedBox");
+                wB.getChildren().clear();
+                BorderPane p = makeBorderPane(loggedInAsUser.getSaved());
+                wB.getChildren().add(p);
+            });
 
             header1.setId("content-header2");
             content1.setId("content-text");
@@ -105,7 +121,7 @@ public class Controller implements Initializable{
             content3.setId("content-text");
             content4.setId("content-text");
 
-            vBox.getChildren().addAll(header1, content1, content2, header2, content3, content4);
+            vBox.getChildren().addAll(header1, content1, content2, header2, content3, content4,watched,saved);
         }else{
             Label label = new Label("You're not logged in");
             vBox.getChildren().addAll(label);
@@ -251,7 +267,7 @@ public class Controller implements Initializable{
                 label.setWrapText(true);
                 label.setMaxWidth(w.getImg().getWidth());
                 ImageView iv = new ImageView(w.getImg());
-                iv.setOnMouseClicked(e -> System.out.println(w.getTitle()));
+                Button remove = new Button("Remove");
 
                 iv.setOnMouseClicked(e -> {
                     try {
@@ -270,23 +286,32 @@ public class Controller implements Initializable{
                 });
 
                 VBox vBox = new VBox();
-                vBox.getChildren().addAll(iv,label);
+                if (currentScene.equals("Saved")) {
+                    vBox.getChildren().addAll(iv, label, remove);
+                    remove.setOnAction(e -> {
+                        vBox.getChildren().clear();
+                        for (Watchable saved : loggedInAsUser.getSaved())
+                        {
+                            if (saved.getTitle().equals(label.getText()))
+                            {
+                                loggedInAsUser.getSaved().remove(saved);
+                                break;
+                            }
+                        }
+                    });
+                }else{
+                    vBox.getChildren().addAll(iv,label);
+                }
                 tile_pane.getChildren().add(vBox);
 
-                iv.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
+                iv.setOnMouseEntered(e ->  {
                         vBox.setScaleX(1.2);
                         vBox.setScaleY(1.2);
-                    }
                 });
 
-                iv.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
+                iv.setOnMouseExited(e -> {
                         vBox.setScaleX(1);
                         vBox.setScaleY(1);
-                    }
                 });
 
             }
