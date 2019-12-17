@@ -525,7 +525,7 @@ public class Controller implements Initializable{
                     = new ComboBox<Episode>(FXCollections.observableList(e));
             episodeList.setValue(s.getSeasons().get(0).getEpisodes().get(0));
             episodeList.setOnAction((e1)-> play.setOnAction((e4)->addEpToWatched(episodeList.getValue(), play)));
-            play.setOnAction((e2)->addEpToWatched(episodeList.getValue(), play));
+            play.setOnAction((e2)->addToWatched(w, play));
 
             seasonList.setId("seasonList");
             seasonList.setOnAction(e2 -> {
@@ -581,18 +581,19 @@ public class Controller implements Initializable{
 
 
     public void addToSaved(Watchable w, Button save){
-        save.setStyle("-fx-color: red");
-        boolean savedExist = false;
-        if(!savedExist){
-            if(w instanceof Series){
-                loggedInAsUser.addSaved(w);
-                System.out.println("You have now saved this series:" + w.getTitle());
-            }
-            if(w instanceof Movie){
-                loggedInAsUser.addSaved(w);
-                System.out.println("You have now saved this movie: " + w.getTitle());
+        boolean exist = false;
+        for(Watchable watchable : loggedInAsUser.getSaved()){
+            if(watchable.getTitle().equals(w.getTitle())){
+                //System.out.println("You have now watched this movie again");
+                exist = true;
+                break;
             }
         }
+        if(!exist){
+            loggedInAsUser.addSaved(w);
+            //System.out.println("You have now watched this movie");
+        }
+        updatePlay(w,null,save);
     }
 
     public void addEpToWatched(Episode e, Button play){
