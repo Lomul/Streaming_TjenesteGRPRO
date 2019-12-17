@@ -37,6 +37,5 @@ public class MovieCreator {
         }
         input.close();
         return movies;
-        //Ved ikke om vi har brug for mere end det her?
     }
 }

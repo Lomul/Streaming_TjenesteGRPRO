@@ -36,8 +36,4 @@ public class User {
     public String getName() {
         return name;
     }
-
-    //TODO: Add to ”Saved”
-    //TODO: Add film and series to a list of “watched”
-    //TODO: Change Account
 }

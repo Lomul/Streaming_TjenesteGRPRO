@@ -32,5 +32,4 @@ public class Series extends  Watchable{
     {
         seasons.add(season);
     }
-//TODO genre skal bruges her men vi skal finde ud af hvordan
 }

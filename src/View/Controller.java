@@ -645,15 +645,5 @@ public class Controller implements Initializable{
             System.out.println(e.getMessage());
         }
     }
-
-    public void changeScenetoWatched(ActionEvent event) throws Exception {
-        currentScene = "Saved";
-        Parent root = FXMLLoader.load(getClass().getResource("account_scene.fxml"));
-        setScene(event, root);
-
-        VBox mB = (VBox) root.lookup("#watchedBox");
-        BorderPane p = makeBorderPane(loggedInAsUser.getWatched());
-        mB.getChildren().add(p);
-    }
 }
 
