@@ -8,6 +8,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Exceptions.WatchableDuplicate;
 import javafx.scene.image.Image;
 import static View.Controller.convertStringToDouble;
 
@@ -25,6 +27,13 @@ public class MovieCreator {
                 title = title.replace("\r\n","");
             }
             String year = input.next();
+
+            for(Movie checkMovies : movies){
+                if (title.equals(checkMovies.title) && year.equals(checkMovies.year)){
+                    throw new WatchableDuplicate(title,year);
+                }
+            }
+
             String genre = input.next();
             String rating = input.next();
             double ratingDouble = convertStringToDouble(rating);

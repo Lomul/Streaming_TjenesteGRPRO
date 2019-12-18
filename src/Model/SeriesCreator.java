@@ -2,8 +2,11 @@ package Model;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Exceptions.WatchableDuplicate;
 import javafx.scene.image.Image;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +28,13 @@ public class SeriesCreator {
             }
             String year = input.next().replaceAll("\\s","");
             int[] yearArray = yearArrayMaker(year);
+
+            for (Series checkSeries : series){
+                if(title.equals(checkSeries.title) && yearArray[0] == checkSeries.yearArray[0]){
+                    throw new WatchableDuplicate(title, year);
+                }
+            }
+
             String genre = input.next();
             String rating = input.next();
             double ratingDouble = convertStringToDouble(rating);

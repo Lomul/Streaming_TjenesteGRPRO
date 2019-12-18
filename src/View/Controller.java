@@ -3,6 +3,7 @@ package View;
 import Exceptions.AlreadyInSaved;
 import Exceptions.LogInException;
 import Exceptions.NoSearchMatched;
+import Exceptions.WatchableDuplicate;
 import Model.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -24,6 +25,7 @@ import javafx.stage.*;
 import javafx.fxml.*;
 
 import javax.security.auth.login.LoginException;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -647,8 +649,9 @@ public class Controller implements Initializable{
         try {
             allMovies = MovieCreator.createMovies();
             allSeries = SeriesCreator.createSeries();
-        }catch (Exception e)
-        {
+        }catch (WatchableDuplicate e) {
+            e.displayError();
+        }catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
