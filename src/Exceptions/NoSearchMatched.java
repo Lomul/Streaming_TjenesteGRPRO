@@ -7,8 +7,4 @@ public class NoSearchMatched extends RuntimeException {
         super("No Results");
         this.search = search;
     }
-
-    public String getSearch() {
-        return search;
-    }
 }

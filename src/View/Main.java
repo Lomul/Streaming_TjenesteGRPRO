@@ -1,28 +1,12 @@
 package View;
 
-import Exceptions.NoSearchMatched;
-import Model.Movie;
-import Model.MovieCreator;
 import Model.User;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -57,7 +41,7 @@ public class Main extends Application {
     }
 
         public static void main(String[] args) {
-        launch(args); //Den her er kun så jeg kan pushe
+        launch(args);
     }
 
 }

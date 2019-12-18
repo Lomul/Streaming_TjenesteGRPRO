@@ -24,8 +24,6 @@ import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.fxml.*;
 
-import javax.security.auth.login.LoginException;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -146,7 +144,6 @@ public class Controller implements Initializable{
         Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
         scene.getStylesheets().add(getClass().getResource("demo.css").toExternalForm());
         stage.setScene(scene);
-        //stage.setMaximized(true);
     }
 
     @FXML
@@ -228,7 +225,6 @@ public class Controller implements Initializable{
             } else {
 
                 String value = (String) comboBox.getValue();
-                String sss = currentScene;
 
                 if (getSearched(text).size() <= 0) {
                     throw new NoSearchMatched(text);
@@ -239,8 +235,6 @@ public class Controller implements Initializable{
 
                 setScene(event, root);
 
-                //BorderPane searched = makeBorderPane(getSearched(text));
-
                 ComboBox<String> comboBoxValue = (ComboBox<String>) root.lookup("#comboBox");
                 comboBoxValue.setValue(value);
 
@@ -250,9 +244,7 @@ public class Controller implements Initializable{
                 System.out.println("All: " + text + " " + value);
                 //Change search result display:
                 Label searchLabel = (Label) root.lookup("#searchLabel");
-                /*System.out.println(searchLabel.getText());*/
                 searchLabel.setText(newtext);
-                /*System.out.println(searchLabel.getText());*/
             }
         }catch(NoSearchMatched e){
             ErrorLabel.setText("\n" + e.getMessage());
@@ -600,26 +592,12 @@ public class Controller implements Initializable{
     public void addToSaved(Watchable w, Button play, Button save){
         for(Watchable watchable : loggedInAsUser.getSaved()){
             if(watchable.getTitle().equals(w.getTitle())){
-                //System.out.println("You have now watched this movie again");
                 throw new AlreadyInSaved(w.getTitle());
             }
         }
         loggedInAsUser.addSaved(w);
-        //System.out.println("You have now watched this movie");
         updatePlay(w,play,save);
     }
-
-    /*public void addEpToWatched(Episode e, Button play){
-        //updatePlay();
-        play.setStyle("-fx-color: red");
-        boolean watchedExist = false;
-        if(loggedInAsUser.getEpWatched().contains(e)){
-            System.out.println("You have watched this episode again");
-        } else{
-            loggedInAsUser.addEpWatched(e);
-            System.out.println("You have now watched this episode");
-        }
-    }*/
     public void addToWatched(Watchable w, Button play, Button save){
         boolean exist = false;
         for(Watchable watchable : loggedInAsUser.getWatched()){
