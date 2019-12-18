@@ -216,6 +216,9 @@ public class Controller implements Initializable{
     @FXML
     private void searchComboBox(ActionEvent event) throws Exception {
         try {
+            if(loggedInAsUser == null){
+                throw new LogInException("You need to be logged in to search");
+            }
             String text = textField.getText();
             if (text.length() <= 0 || text.matches("^\\s*$")) {
                 ErrorLabel.setText("\nMust contain 1 or more symbols");
@@ -252,6 +255,8 @@ public class Controller implements Initializable{
         }catch(NoSearchMatched e){
             ErrorLabel.setText("\n" + e.getMessage());
             ErrorLabel.setTextFill(Color.web("ff0000"));
+        }catch(LogInException e){
+            e.displayError();
         }
     }
 
