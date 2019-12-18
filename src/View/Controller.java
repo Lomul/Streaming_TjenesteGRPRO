@@ -82,6 +82,7 @@ public class Controller implements Initializable{
             Label header2 = new Label("Settings");
             Button content3 = new Button("Delete Account");
             Button content4 = new Button("Sign Out");
+            Label header3 = new Label("User Lists");
             Button watched = new Button("Show watched");
             Button saved = new Button("Show saved");
 
@@ -120,8 +121,12 @@ public class Controller implements Initializable{
             header2.setId("content-header2");
             content3.setId("content-text");
             content4.setId("content-text");
+            header3.setId("content-header2");
+            saved.setId("content-text");
+            watched.setId("content-text");
 
-            vBox.getChildren().addAll(header1, content1, content2, header2, content3, content4,watched,saved);
+            vBox.setSpacing(10);
+            vBox.getChildren().addAll(header1, content1, content2, header2, content3, content4, header3,watched,saved);
         }else{
             Label label = new Label("You're not logged in");
             vBox.getChildren().addAll(label);
