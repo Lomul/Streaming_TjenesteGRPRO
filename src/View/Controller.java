@@ -1,10 +1,11 @@
 package View;
 
+import Exceptions.AlreadyInSaved;
+import Exceptions.LogInException;
 import Exceptions.NoSearchMatched;
 import Model.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,10 +23,9 @@ import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.fxml.*;
 
-import java.awt.*;
+import javax.security.auth.login.LoginException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import static Model.User.users;
@@ -149,18 +149,24 @@ public class Controller implements Initializable{
 
     @FXML
     private void logIn(ActionEvent event) throws Exception {
-        String username = temptUsername.getText();
-        Boolean doesNotExist = true;
-        for(User user: users){
-            if(username.equals(user.getName())){
-                doesNotExist = false;
-                Main.loggedIn = true;
-                loggedInAsUser = user;
-                changeSceneToHome(event);
-                break;
+        try{
+            String username = temptUsername.getText();
+            Boolean doesNotExist = true;
+            for(User user: users){
+                if(username.equals(user.getName())){
+                    doesNotExist = false;
+                    Main.loggedIn = true;
+                    loggedInAsUser = user;
+                    changeSceneToHome(event);
+                    break;
+                }
             }
+            if(doesNotExist) {
+                throw new LogInException(username + ": does not exist");
+            }
+        }catch(LogInException e){
+            e.displayError();
         }
-        if(doesNotExist) {System.out.println(username + ": Does not exist");}
     }
 
     @FXML
@@ -172,24 +178,24 @@ public class Controller implements Initializable{
 
     @FXML
     private void createNewAccount(ActionEvent event) throws Exception {
-        String username = temptUsername.getText();
-        Boolean doesExist = false;
-        for(User user: users) {
-            if (username.equals(user.getName())) {
-                System.out.println(username + ": Already exist");
-                doesExist = true;
-                break;
+        try {
+            String username = temptUsername.getText();
+            if (username.matches("^\\s*$")) {
+                throw new LogInException("Username must contain more than whitespace");
             }
-        }
-        if(!doesExist){
+            for (User user : users) {
+                if (username.equals(user.getName())) {
+                    throw new LogInException(username + ": already exist");
+                }
+            }
             User newuser = new User(username);
             users.add(newuser);
             Main.loggedIn = true;
             loggedInAsUser = newuser;
             changeSceneToHome(event);
+        }catch(LogInException e){
+            e.displayError();
         }
-
-
     }
 
     @FXML
@@ -209,38 +215,43 @@ public class Controller implements Initializable{
 
     @FXML
     private void searchComboBox(ActionEvent event) throws Exception {
-        String text = textField.getText();
-        if(text.length() <= 0){
-            ErrorLabel.setText("\nMust contain 1 or more symbols");
-            ErrorLabel.setTextFill(Color.web("ff0000"));
-        }else {
+        try {
+            String text = textField.getText();
+            if (text.length() <= 0 || text.matches("^\\s*$")) {
+                ErrorLabel.setText("\nMust contain 1 or more symbols");
+                ErrorLabel.setTextFill(Color.web("ff0000"));
+            } else {
 
-            String value = (String) comboBox.getValue();
-            String sss = currentScene;
+                String value = (String) comboBox.getValue();
+                String sss = currentScene;
 
-            if (getSearched(text).size() <= 0) {
-                throw new NoSearchMatched(text);
+                if (getSearched(text).size() <= 0) {
+                    throw new NoSearchMatched(text);
+                }
+
+                BorderPane searched = makeBorderPane(trimArray(getSearched(text)));
+                Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
+
+                setScene(event, root);
+
+                //BorderPane searched = makeBorderPane(getSearched(text));
+
+                ComboBox<String> comboBoxValue = (ComboBox<String>) root.lookup("#comboBox");
+                comboBoxValue.setValue(value);
+
+                VBox sB = (VBox) root.lookup("#searchedBox");
+                sB.getChildren().add(searched);
+                String newtext = "Searched for: \n" + value + ": " + text + ", in all";
+                System.out.println("All: " + text + " " + value);
+                //Change search result display:
+                Label searchLabel = (Label) root.lookup("#searchLabel");
+                /*System.out.println(searchLabel.getText());*/
+                searchLabel.setText(newtext);
+                /*System.out.println(searchLabel.getText());*/
             }
-
-            BorderPane searched = makeBorderPane(trimArray(getSearched(text)));
-            Parent root = FXMLLoader.load(getClass().getResource("search_scene.fxml"));
-
-        setScene(event, root);
-
-        //BorderPane searched = makeBorderPane(getSearched(text));
-
-            ComboBox<String> comboBoxValue = (ComboBox<String>) root.lookup("#comboBox");
-            comboBoxValue.setValue(value);
-
-            VBox sB = (VBox) root.lookup("#searchedBox");
-            sB.getChildren().add(searched);
-            String newtext = "Searched for: \n" + value + ": " + text + ", in all";
-            System.out.println("All: " + text + " " + value);
-            //Change search result display:
-            Label searchLabel = (Label) root.lookup("#searchLabel");
-            /*System.out.println(searchLabel.getText());*/
-            searchLabel.setText(newtext);
-            /*System.out.println(searchLabel.getText());*/
+        }catch(NoSearchMatched e){
+            ErrorLabel.setText("\n" + e.getMessage());
+            ErrorLabel.setTextFill(Color.web("ff0000"));
         }
     }
 
@@ -535,14 +546,24 @@ public class Controller implements Initializable{
                 play.setOnAction((e3)->addToWatched(s, play, save));
             });
 
-            save.setOnAction((e4)->addToSaved(w, play, save));
+            save.setOnAction((e4)->{
+                try{
+                    addToSaved(w, play, save);
+                }catch(AlreadyInSaved a){
+                    a.displayError();
+                }});
             vBoxDetail.getChildren().addAll(seasonList);
             vBoxDetail.getChildren().addAll(episodeList);
             updatePlay(w,play,save);
         }else{ //if w instance of Movie
             System.out.println(w);
             play.setOnAction((e)->addToWatched(w, play, save));
-            save.setOnAction((e)->addToSaved(w, play, save));
+            save.setOnAction((e)->{
+                try{
+                    addToSaved(w, play, save);
+                }catch(AlreadyInSaved a){
+                    a.displayError();
+            }});
             updatePlay(w,play, save);
         }
 
@@ -570,18 +591,14 @@ public class Controller implements Initializable{
 
 
     public void addToSaved(Watchable w, Button play, Button save){
-        boolean exist = false;
         for(Watchable watchable : loggedInAsUser.getSaved()){
             if(watchable.getTitle().equals(w.getTitle())){
                 //System.out.println("You have now watched this movie again");
-                exist = true;
-                break;
+                throw new AlreadyInSaved(w.getTitle());
             }
         }
-        if(!exist){
-            loggedInAsUser.addSaved(w);
-            //System.out.println("You have now watched this movie");
-        }
+        loggedInAsUser.addSaved(w);
+        //System.out.println("You have now watched this movie");
         updatePlay(w,play,save);
     }
 

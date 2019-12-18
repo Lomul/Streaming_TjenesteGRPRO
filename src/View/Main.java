@@ -49,11 +49,6 @@ public class Main extends Application {
 
             stage.show();
 
-        } catch (NoSearchMatched e) {
-
-            Label searchLabel = (Label) root1.lookup("#searchLabel");
-            searchLabel.setText("No results for: " + e.getSearch());
-
         } catch (Exception e) {
 
             System.out.println(e.getMessage());
