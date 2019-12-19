@@ -13,7 +13,7 @@ import static View.Controller.convertStringToDouble;
 public class MovieCreator {
 
     public ArrayList<Movie> createMovies() throws Exception {
-        Scanner input = new Scanner(new File("C:\\Users\\madsc\\Documents\\GitHub\\Streaming_TjenesteGRPRO\\Film.txt"));
+        Scanner input = new Scanner(new File("Film.txt"));
         input.useDelimiter(";|/n");
         ArrayList<Movie> movies = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class MovieCreator {
                 String genre = input.next();
                 String rating = input.next();
                 double ratingDouble = convertStringToDouble(rating);
-                String filePath = "..\\..\\..\\FilmBilleder\\" + title + ".jpg";
+                String filePath = "FilmBilleder\\" + title + ".jpg";
 
                 Image img = new Image(new FileInputStream(filePath));
 
