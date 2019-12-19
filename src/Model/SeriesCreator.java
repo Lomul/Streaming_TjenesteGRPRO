@@ -2,6 +2,8 @@ package Model;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,7 +17,7 @@ import static View.Controller.convertStringToDouble;
 public class SeriesCreator {
 
     public static ArrayList<Series> createSeries() throws Exception {
-        Scanner input = new Scanner(new File("Serier.txt"));
+        Scanner input = new Scanner(new File("C:\\Users\\madsc\\Documents\\GitHub\\Streaming_TjenesteGRPRO\\Serier.txt"));
         input.useDelimiter(";|/n");
         ArrayList<Series> series = new ArrayList<>();
 

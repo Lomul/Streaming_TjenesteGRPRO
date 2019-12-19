@@ -1,7 +1,6 @@
 package Model;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,7 +11,7 @@ import static View.Controller.convertStringToDouble;
 public class MovieCreator {
 
     public static ArrayList<Movie> createMovies() throws Exception {
-        Scanner input = new Scanner(new File("Film.txt"));
+        Scanner input = new Scanner(new File("C:\\Users\\madsc\\Documents\\GitHub\\Streaming_TjenesteGRPRO\\Film.txt"));
         input.useDelimiter(";|/n");
         ArrayList<Movie> movies = new ArrayList<>();
 
