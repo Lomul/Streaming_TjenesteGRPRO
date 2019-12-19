@@ -635,8 +635,10 @@ public class Controller implements Initializable{
         ADMIN = new User("ADMIN");
         User.users.add(ADMIN);
         try {
-            allMovies = MovieCreator.createMovies();
-            allSeries = SeriesCreator.createSeries();
+            MovieCreator m = new MovieCreator();
+            allMovies = m.createMovies();
+            SeriesCreator s = new SeriesCreator();
+            allSeries = s.createSeries();
         }catch (WatchableDuplicate e) {
             e.displayError();
         }catch (Exception e) {

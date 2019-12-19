@@ -16,7 +16,7 @@ import static View.Controller.convertStringToDouble;
 
 public class SeriesCreator {
 
-    public static ArrayList<Series> createSeries() throws Exception {
+    public ArrayList<Series> createSeries() throws Exception {
         Scanner input = new Scanner(new File("C:\\Users\\madsc\\Documents\\GitHub\\Streaming_TjenesteGRPRO\\Serier.txt"));
         input.useDelimiter(";|/n");
         ArrayList<Series> series = new ArrayList<>();
@@ -41,7 +41,7 @@ public class SeriesCreator {
             double ratingDouble = convertStringToDouble(rating);
             String seasons = input.next();
             ArrayList<Season> seasonArray = seasonCreator(seasons);
-            String filePath = "SerieBilleder/" + title + ".jpg";
+            String filePath = "..\\..\\..\\SerieBilleder\\" + title + ".jpg";
 
             Image img = new Image(new FileInputStream(filePath));
 
